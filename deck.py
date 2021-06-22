@@ -20,13 +20,11 @@ class Deck:
     # cardCount(card) return how many cards exists (0-4) in the deck.
     # get_random_card() return random card using random class
 
-    # printDeck() print the deck array
+    # printDeck() print the deck array to console
     def printDeck(self):
-        # for i in self.deck:
-        #     print (str(i) + " has " + str(self.deck[i])+ "\n")
         i = 1
         while i < len(self.deck):
-            print (str(i) + " has " + str(self.deck[i])+ " cards\n")
+            print ("Card value " + str(i) + " has " + str(self.deck[i])+ " cards\n")
             i+=1
 
 
