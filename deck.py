@@ -48,11 +48,13 @@ class Deck:
 
 
 game = Deck()
-game.printDeck()
+#game.printDeck()
 print("Checking how many 10 cards exist in the deck:")
 print(game.cardCount(10))
 
 print("\nUse random number generator to pick a card and then show it. Also check deck for decrement:")
-print(game.get_random_card())
+while game.cardCount(5) != 0:
+    print(game.get_random_card())
+
 game.printDeck()
 
