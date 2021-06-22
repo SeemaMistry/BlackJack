@@ -1,7 +1,5 @@
-# Deck Class:
-#   A deck of cards using nummerical values. Functions contain: showCard(), get_random_card(), cardCount(card)
-# Helper random Class: (Private)
-#   Random Number generator (1-13) for selecting cards
+# Deck Class: A deck of cards using nummerical values. 
+# Import random Class as private helper class for random number generator
 
 # importing helper modules
 import random
@@ -13,10 +11,6 @@ class Deck:
         # add 4 cards per index in the array
         for i in range(14):
             self.deck.append(4)
-    
-    # showCard(card) return the card IF card exists in the deck as true. Else, if card is not in deck return false.
-    # wait ... might not need this function
-    # no do need this helper function for when using random num generator
 
     # cardCount(card) return how many cards exists (0-4) in the deck.
     def cardCount(self, card):
@@ -27,17 +21,18 @@ class Deck:
 
     # get_random_card() return random card using random class
     def get_random_card(self):
-        # store a random number from 1-13 into cardValue
-        cardValue = random.randint(1,13)
+        
         # find cardValue in array and check if cardCount > 0. If greater decrement value by one, else run again
         cardExist = False
         while cardExist == False:
+            # store a random number from 1-13 into cardValue
+            cardValue = random.randint(1,13)
             if self.cardCount(cardValue) > 0:
                 cardExist = True
                 self.deck[cardValue] -= 1
                 return cardValue
             else:
-                cardValue = random.randint(1,13)
+                continue
 
     # printDeck() print the deck array to console
     def printDeck(self):
