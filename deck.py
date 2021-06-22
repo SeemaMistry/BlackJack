@@ -13,18 +13,16 @@ class Deck:
             self.deck.append(4)
 
     # cardCount(card) return how many cards exists (0-4) in the deck.
-    def cardCount(self, card):
-        # go to index in array and see array.value
-        cardCount = self.deck[card]
-        # return array value
-        return cardCount
+    def cardCount(self, cardNum):
+        # return how many cards of cardNum exist in the deck
+        return self.deck[cardNum]
 
     # get_random_card() return random card using random class
     def get_random_card(self):
-        
-        # find cardValue in array and check if cardCount > 0. If greater decrement value by one, else run again
         cardExist = False
+        # loop through and find a card from the deck
         while cardExist == False:
+            # find cardValue in array and check if cardCount > 0. If <0 decrement value by one, else run again
             # store a random number from 1-13 into cardValue
             cardValue = random.randint(1,13)
             if self.cardCount(cardValue) > 0:
@@ -37,6 +35,7 @@ class Deck:
     # printDeck() print the deck array to console
     def printDeck(self):
         i = 1
+        # loop through and print all the cards in the deck
         while i < len(self.deck):
             print ("Card value " + str(i) + " has " + str(self.deck[i])+ " cards\n")
             i+=1
