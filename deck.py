@@ -25,16 +25,17 @@ class Deck:
         while cardExist == False:
             # find cardValue in array and check if cardCount > 0. If <0 decrement value by one, else run again
             # store a random number from 1-13 into cardValue
-            self.random_card = random.randint(1,13)
-            if self.cardCount(self.random_card) > 0:
+            card = random.randint(1,13)
+            if self.cardCount(card) > 0:
                 cardExist = True
-                self.deck[self.random_card] -= 1
-                return self.random_card
+                self.deck[card] -= 1
+                self.random_card.append(card)
             else:
                 continue
 
-    def printCard(card):
-        print(int(card))
+    def getRandomCard(self):
+        return self.random_card.pop(0)
+        
 
 
     # printDeck() print the deck array to console
