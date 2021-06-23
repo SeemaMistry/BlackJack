@@ -7,6 +7,7 @@ import random
 # make a deck of cards with associated functions
 class Deck:
     def __init__(self):
+        self.random_card = []
         self.deck = []
         # add 4 cards per index in the array
         for i in range(14):
@@ -24,13 +25,17 @@ class Deck:
         while cardExist == False:
             # find cardValue in array and check if cardCount > 0. If <0 decrement value by one, else run again
             # store a random number from 1-13 into cardValue
-            cardValue = random.randint(1,13)
-            if self.cardCount(cardValue) > 0:
+            self.random_card = random.randint(1,13)
+            if self.cardCount(self.random_card) > 0:
                 cardExist = True
-                self.deck[cardValue] -= 1
-                return cardValue
+                self.deck[self.random_card] -= 1
+                return self.random_card
             else:
                 continue
+
+    def printCard(card):
+        print(int(card))
+
 
     # printDeck() print the deck array to console
     def printDeck(self):
@@ -41,14 +46,14 @@ class Deck:
             i+=1
 
 
-game = Deck()
-#game.printDeck()
-print("Checking how many 10 cards exist in the deck:")
-print(game.cardCount(10))
+# game = Deck()
+# #game.printDeck()
+# print("Checking how many 10 cards exist in the deck:")
+# print(game.cardCount(10))
 
-print("\nUse random number generator to pick a card and then show it. Also check deck for decrement:")
-while game.cardCount(5) != 0:
-    print(game.get_random_card())
+# print("\nUse random number generator to pick a card and then show it. Also check deck for decrement:")
+# while game.cardCount(5) != 0:
+#     print(game.get_random_card())
 
-game.printDeck()
+# game.printDeck()
 
