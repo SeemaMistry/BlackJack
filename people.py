@@ -2,14 +2,20 @@
 # Import Deck class
 
 class People:
-    # initialize variable 
+    # initialize the person's attributes: hand, points (initialize to 0), player_status (true for playing, false when not hitting anymore)
 
     # pointsCounter() shows total points accumulated by player
     # addPoint() add a point for the player when they win
     
-    # cardDealt() store cards player is holding in an array. Print it on console (players cards are shown up)
-    # hit() add a card to player hand
-    # ruleCheck() checks players cards to see if you won or bust
+    # playerHand() store cards player is holding in an array. 
+    # - you get cards from the Deck class
+    # - store cards in an array
+    # printHand() Print playerHand() on console every turn (players cards are all shown up)
+
+    # playerCall(str) string check for hit, pass
+    # - if hit -> get another card from the deck (use Deck.get_random_card) and store it into players hand
+    # - if pass -> update player_status to false
+
 
 
 class Dealer(People):
