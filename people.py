@@ -19,9 +19,13 @@ class People:
         # add a point only when player won. One win = One point
         self.point +=1
     
-    # playerHand() store cards player is holding in an array. 
-    # - you get cards from the Deck class
-    # - store cards in an array
+    def getHand(self):
+        return self.hand
+    
+    def setHand(self, card):
+        # take the card and add it to the player's hand
+        self.hand.append(card)
+
     
     # printHand() Print playerHand() on console every turn (players cards are all shown up)
 
