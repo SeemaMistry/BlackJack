@@ -4,15 +4,20 @@
 class People:
     # initialize the person's attributes: hand, points (initialize to 0), player_status (true for playing, false when not hitting anymore), player_name
     def __init__(self, name):
-        self_points = 0
-        self_player_status = True
-        self_points = 0
-        self_name = name
-        self_hand = []
+        self.points = 0
+        self.player_status = True
+        self.points = 0
+        self.name = name
+        self.hand = []
 
-    # pointsCounter() shows total points accumulated by player
+    # getPoints() shows total points accumulated by player
+    def getPoints(self):
+        return self.points
     
     # addPoint() add a point for the player when they win
+    def addPoint(self):
+        # add a point only when player won. One win = One point
+        self.point +=1
     
     # playerHand() store cards player is holding in an array. 
     # - you get cards from the Deck class
