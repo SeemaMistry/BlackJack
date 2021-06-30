@@ -17,6 +17,14 @@ class Player:
         # add a card to your hand
         self.hand.append(card)
 
+    # show hand needs to call on Card.show()
+    def showHand(self):
+        print("{}'s hand: ".format(self.name))
+        # per card in the player's hand, display each card (use Card.show())
+        for card in self.hand:
+            card.show()
+
+
     
 
 # Test 1 - June 29/2021
@@ -36,5 +44,18 @@ p1.deleteHand()
 
 # Test 2 - June 29/2021
 # Test creating a Card object and adding it to the p1's hand
-card0 = Card("Spade", 10)
+print("\n")
+card0 = Card("Spades", 10)
 card0.show()
+card1 = Card("Hearts", 10)
+card1.show()
+card2 = Card("Diamonds", 10)
+card2.show()
+card3 = Card("Clubs", 10)
+card3.show()
+p1.addHand(card0)
+p1.addHand(card1)
+p1.addHand(card2)
+p1.addHand(card3)
+print("\n\n")
+p1.showHand()
