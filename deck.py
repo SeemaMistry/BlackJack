@@ -26,9 +26,18 @@ class Deck:
         # shuffle cards in the deck
         # no return value, just shuffle the deck. If you want the deck, call printDeck()
         random.shuffle(self.cards)
+    
+    def topCard(self):
+        # pop off the top card (index=0) of the deck. Return Card Object
+        topCard = self.cards.pop(0)
+        return topCard
+
 
 
 deck = Deck()
 #deck.printDeck()
 deck.shuffle()
 deck.printDeck()
+top = deck.topCard()
+print("\nAnd the top card of your shuffled deck is: ")
+top.show()
