@@ -1,5 +1,6 @@
-# import the Card class
+# import the Card class and Random from python lib
 from card import Card
+import random
 class Deck:
     def __init__(self):
         self.cards = []
@@ -21,5 +22,13 @@ class Deck:
         for card in self.cards:
             card.show()
 
+    def shuffle(self):
+        # shuffle cards in the deck
+        # no return value, just shuffle the deck. If you want the deck, call printDeck()
+        random.shuffle(self.cards)
+
+
 deck = Deck()
+#deck.printDeck()
+deck.shuffle()
 deck.printDeck()
