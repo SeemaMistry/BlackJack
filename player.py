@@ -1,3 +1,5 @@
+from deck import Deck, Card
+
 class Player:
     # initialize the person's attributes: hand, points (initialize to 0), player_status (true for playing, false when not hitting anymore), player_name
     def __init__(self, name):
@@ -32,3 +34,7 @@ p1.name = "Jamie"
 print(p1.hand)
 p1.deleteHand()
 
+# Test 2 - June 29/2021
+# Test creating a Card object and adding it to the p1's hand
+card0 = Card("Spade", 10)
+card0.show()
