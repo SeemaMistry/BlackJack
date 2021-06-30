@@ -27,35 +27,55 @@ class Player:
 
     
 
-# Test 1 - June 29/2021
-# Test you can make a player with a name, get/set points, print/add cards to their hand
-p1 = Player("Seema")
-print(p1.name)
-print(p1.points)
-print(p1.hand)
-p1.addHand(5)
-print(p1.hand)
-p1.addHand(6)
-print(p1.hand)
-p1.addHand(7)
-p1.name = "Jamie"
-print(p1.hand)
-p1.deleteHand()
+# # Test 1 - June 29/2021
+# # Test you can make a player with a name, get/set points, print/add cards to their hand
+# p1 = Player("Seema")
+# print(p1.name)
+# print(p1.points)
+# print(p1.hand)
+# p1.addHand(5)
+# print(p1.hand)
+# p1.addHand(6)
+# print(p1.hand)
+# p1.addHand(7)
+# p1.name = "Jamie"
+# print(p1.hand)
+# p1.deleteHand()
 
-# Test 2 - June 29/2021
-# Test creating a Card object and adding it to the p1's hand
-print("\n")
-card0 = Card("Spades", 10)
-card0.show()
-card1 = Card("Hearts", 10)
-card1.show()
-card2 = Card("Diamonds", 10)
-card2.show()
-card3 = Card("Clubs", 10)
-card3.show()
-p1.addHand(card0)
-p1.addHand(card1)
-p1.addHand(card2)
-p1.addHand(card3)
-print("\n\n")
-p1.showHand()
+# # Test 2 - June 29/2021
+# # Test creating a Card object and adding it to the p1's hand
+# print("\n")
+# card0 = Card("Spades", 10)
+# card0.show()
+# card1 = Card("Hearts", 10)
+# card1.show()
+# card2 = Card("Diamonds", 10)
+# card2.show()
+# card3 = Card("Clubs", 10)
+# card3.show()
+# p1.addHand(card0)
+# p1.addHand(card1)
+# p1.addHand(card2)
+# p1.addHand(card3)
+# print("\n\n")
+# p1.showHand()
+# p1.deleteHand()
+
+# Test 3 - June 29/2021
+# Create a deck and pull random cards from the deck and add it to the player's hand
+deck = Deck()
+c1 = deck.cards[0]
+c2 = deck.cards[10]
+c3 = deck.cards[36]
+c4 = deck.cards[48]
+c1.show()
+c2.show()
+c3.show()
+c4.show()
+# make a new player
+p2 = Player("Aron")
+p2.addHand(c1)
+p2.addHand(c2)
+p2.addHand(c3)
+p2.addHand(c4)
+p2.showHand()
