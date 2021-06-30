@@ -3,7 +3,7 @@ from deck import Deck, Card
 class Player:
     # initialize the person's attributes: hand, points (initialize to 0), player_status (true for playing, false when not hitting anymore), player_name
     def __init__(self, name):
-        self.player_status = True # if player wants to continue playing or show cards
+        self.player_status = True # if player wants to continue playing = true, or stop playing = false
         self.points = 0 # win = 1 point, loss is no points
         self.name = name # name the player
         self.hand = [] # all the cards player has is stored in array
@@ -14,7 +14,7 @@ class Player:
         print("{}, has no cards".format(self.name))
 
     def addHand(self, card):
-        # add a card to your hand
+        # add a Card Object to your hand
         self.hand.append(card)
 
     # show hand needs to call on Card.show()
