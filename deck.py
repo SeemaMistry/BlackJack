@@ -15,8 +15,19 @@ class Deck:
         ranks = ["2","3","4","5","6","7","8","9","10","Jack","Queen","King","Ace"]
         for s in suits:
             for r in ranks:
-                # add the new Carb Object to the deck of cards
-                self.cards.append(Card(s,r))
+                # find rank's int value first: either int("number") or Jack/Queen/King=10, Ace=1 and 11
+                # then, add the new Card Object to the deck of cards
+                
+                # if r in {Jack/Queen/King} -> numVal = 10
+                if r in {"Jack","Queen","King"}:
+                    self.cards.append(Card(s,r,10))
+                # if r = Ace -> numVal = 1, numVal2 = 11
+                elif r == "Ace":
+                    self.cards.append(Card(s,r,1,11))
+                # else -> numVal = int(r)
+                else:
+                    self.cards.append(Card(s,r,int(r)))
+                
 
     def printDeck(self):
         # loop through and print all the cards from the deck (use Card.py's show() function)
@@ -27,7 +38,10 @@ class Deck:
         # shuffle cards in the deck
         # no return value, just shuffle the deck. If you want to show the deck, call printDeck()
         random.shuffle(self.cards)
-    
+
+ # what happens when there are no cards in the deck?  
+ # make a function to check if deck has any cards left
+ # OR use a class exception for empty card deck (link in discord server) 
     def topCard(self):
         # pop off the top card (index=0) of the deck. Return Card Object
         topCard = self.cards.pop(0)
@@ -44,15 +58,24 @@ class Deck:
 
 
 
-deck = Deck()
-#deck.printDeck()
-deck.shuffle()
-deck.printDeck()
-top = deck.topCard()
-print("\nAnd the top card of your shuffled deck is: ")
-top.show()
-print("\nAnd a random card of your shuffled deck selected is: ")
-deck.randomCard().show()
+# deck = Deck()
+# deck.printDeck()
+# deck.shuffle()
+# deck.printDeck()
+# top = deck.topCard()
+# print("\nAnd the top card of your shuffled deck is: ")
+# top.show()
+# print("\nAnd a random card of your shuffled deck selected is: ")
+# print(deck.randomCard().show())
 
+# Test 2 - June 30/2021
+# Testing Card Object's new attribute numVal and numVal2 are working at deck creation
+deck = Deck()
+deck.shuffle()
+print("\nAnd a random card of your shuffled deck selected is: ")
+r = deck.randomCard()
+r.show()
+print(r.numVal)
+print(r.numVal2)
 
 
