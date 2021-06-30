@@ -32,6 +32,15 @@ class Deck:
         topCard = self.cards.pop(0)
         return topCard
 
+    # return random card from anywhere in the deck
+    def randomCard(self):
+        # get total number of cards left in deck for stop range
+        numCards = len(self.cards)
+        # randomly select cards from 0 to len-1
+        ranCard = random.randint(0, numCards-1)
+        print("\t random card is {}".format(ranCard))
+        return self.cards.pop(ranCard)
+
 
 
 deck = Deck()
@@ -41,3 +50,8 @@ deck.printDeck()
 top = deck.topCard()
 print("\nAnd the top card of your shuffled deck is: ")
 top.show()
+print("\nAnd a random card of your shuffled deck selected is: ")
+deck.randomCard().show()
+
+
+
