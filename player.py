@@ -1,3 +1,4 @@
+# card import not needed
 from deck import Deck, Card
 
 class Player:
@@ -19,10 +20,19 @@ class Player:
 
     # show hand needs to call on Card.show()
     def showHand(self):
-        print("{}'s hand: ".format(self.name))
-        # per card in the player's hand, display each card (use Card.show())
+        handLen = len(self.hand)
+        i = 0
+        # make empty string and append player's hand
+        hand = ''
+        hand += "{}'s hand: ".format(self.name)
+        # loop through player's hand and add string of card object (Card.strShow() -> str). Add "," to separate cards
         for card in self.hand:
-            card.show()
+            hand += card.strShow()
+            if i < (handLen-1):
+                hand += ", "
+            i += 1
+        print(hand)
+
 
 
     
