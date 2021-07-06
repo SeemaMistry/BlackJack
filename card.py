@@ -1,9 +1,8 @@
 class Card:
-    def __init__(self, suit, value, numVal, numVal2=0):
+    def __init__(self, suit, value, numVal):
         self.suit = suit # Spades, Clubs, Hearts, Diamonds
         self.value = value # 2-10, Jack, Queen, King, Ace
         self.numVal = numVal # int value of the card
-        self.numVal2 = numVal2 # FOR Ace ONLY! 2 values: 1 or 11. 11 value goes here, 1 goes in numVal
 
     def show(self):
         # print to console example: 
@@ -13,5 +12,12 @@ class Card:
     def strShow(self):
         # return str of show(self)
         return ("{} of {}".format(self.value, self.suit))
+
+class Ace(Card):
+    # FOR Ace ONLY! 2 values: 1 or 11
+    def __init__(self, suit, value, numVal, numVal2):
+        super().__init__(suit, value, numVal) # numVal = 11
+        self.numVal2 = numVal2 # numVal2 = 1
+
 
 

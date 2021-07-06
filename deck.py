@@ -1,5 +1,5 @@
 # import the Card class and Random from python lib
-from card import Card
+from card import Card, Ace
 import random
 class Deck:
     def __init__(self):
@@ -23,7 +23,7 @@ class Deck:
                     self.cards.append(Card(s,r,10))
                 # if r = Ace -> numVal = 1, numVal2 = 11
                 elif r == "Ace":
-                    self.cards.append(Card(s,r,1,11))
+                    self.cards.append(Ace(s,r,11,1))
                 # else -> numVal = int(r)
                 else:
                     self.cards.append(Card(s,r,int(r)))
@@ -76,6 +76,10 @@ print("\nAnd a random card of your shuffled deck selected is: ")
 r = deck.randomCard()
 r.show()
 print(r.numVal)
-print(r.numVal2)
+
+# Test 3 - July 6/2021
+# Testing refractored Card class (making new inherited Ace class for numVal2) to see if both Ace values appear
+if r.value == "Ace":
+    print(r.numVal2)
 
 
