@@ -10,4 +10,8 @@ class Card:
         # 6 of Clubs
         print ("{} of {}".format(self.value, self.suit))
 
+    def strShow(self):
+        # return str of show(self)
+        return ("{} of {}".format(self.value, self.suit))
+
 
