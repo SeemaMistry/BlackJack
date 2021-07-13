@@ -48,13 +48,17 @@ class Dealer(Player):
         hand += "{}'s hand: ".format(self.name)
         # loop through player's hand and add string of card object (Card.strShow() -> str). Add "," to separate cards. Ommit first card
         for card in self.hand:
+            # first card is a mysterious X, all other cards should be printed
             if i == 0:
-                hand += "x"
+                hand += "X"
             else:
                 hand += card.strShow()
+            # add commas ", " for all except last card in hand
             if i < (handLen - 1):
                  hand += ", "
             i +=1
+        # print out the hand
+        print(hand)
 
 
 
@@ -99,19 +103,36 @@ class Dealer(Player):
 
 # Test 3 - June 29/2021
 # Create a deck and pull random cards from the deck and add it to the player's hand
+# deck = Deck()
+# c1 = deck.cards[0]
+# c2 = deck.cards[10]
+# c3 = deck.cards[36]
+# c4 = deck.cards[51]
+# c1.show()
+# c2.show()
+# c3.show()
+# c4.show()
+# # make a new player
+# p2 = Player("Aron")
+# p2.addHand(c1)
+# p2.addHand(c2)
+# p2.addHand(c3)
+# p2.addHand(c4)
+# p2.showHand()
+
+# Test 4 - July 13th
+# test out dealer class
 deck = Deck()
 c1 = deck.cards[0]
 c2 = deck.cards[10]
 c3 = deck.cards[36]
 c4 = deck.cards[51]
-c1.show()
-c2.show()
-c3.show()
-c4.show()
-# make a new player
-p2 = Player("Aron")
+p2 = Dealer()
 p2.addHand(c1)
 p2.addHand(c2)
 p2.addHand(c3)
 p2.addHand(c4)
+print ("going to showHand() of the dealer")
 p2.showHand()
+print ("\ngoing to show dealersHand() of the dealer")
+p2.dealersHand()
