@@ -8,6 +8,7 @@ class Player:
         self.points = 0 # win = 1 point, loss is no points
         self.name = name # name the player
         self.hand = [] # all the cards player has is stored in array
+        # NEED TO ADD SELF.SPAREHAND = [] FOR CASES WHEN PLAYER SPLITS HAND WITH 2 ACES
 
     def deleteHand(self):
         # clear all the cards from the deck
@@ -32,6 +33,31 @@ class Player:
                 hand += ", "
             i += 1
         print(hand)
+
+
+class Dealer(Player):
+    def __init__(self, name="Dealer"):
+        super().__init__(name)
+
+    # Dealer's hand should show all cards EXCEPT the first card dealer holds
+    def dealersHand(self):
+        handLen = len(self.hand)
+        i = 0
+        # make empty string and append player's hand
+        hand = ''
+        hand += "{}'s hand: ".format(self.name)
+        # loop through player's hand and add string of card object (Card.strShow() -> str). Add "," to separate cards. Ommit first card
+        for card in self.hand:
+            if i == 0:
+                hand += "x"
+            else:
+                hand += card.strShow()
+            if i < (handLen - 1):
+                 hand += ", "
+            i +=1
+
+
+
 
 
 
