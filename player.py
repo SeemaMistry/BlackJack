@@ -32,7 +32,7 @@ class Player:
             if i < (handLen-1):
                 hand += ", "
             i += 1
-        print(hand)
+        return hand
 
 
 class Dealer(Player):
@@ -41,27 +41,19 @@ class Dealer(Player):
 
     # Dealer's hand should show all cards EXCEPT the first card dealer holds
     def dealersHand(self):
-        handLen = len(self.hand)
-        i = 0
-        # make empty string and append player's hand
-        hand = ''
-        hand += "{}'s hand: ".format(self.name)
-        # loop through player's hand and add string of card object (Card.strShow() -> str). Add "," to separate cards. Ommit first card
-        for card in self.hand:
-            # first card is a mysterious X, all other cards should be printed
-            if i == 0:
-                hand += "X"
-            else:
-                hand += card.strShow()
-            # add commas ", " for all except last card in hand
-            if i < (handLen - 1):
-                 hand += ", "
-            i +=1
-        # print out the hand
-        print(hand)
-
-
-
+        # find start and stop from string returned by showHand()
+        hand = self.showHand()
+        # start at first ":" (but in for loop got +2 to include spacing)
+        i = hand.find(":")
+        # stop at first comma ","
+        k = hand.find(",")
+        remove = ''
+        # add all letters from start to stop-1 into a string
+        for letter in range (i+2, k):
+            remove += hand[letter]
+        # replace the string in remove with and empty X
+        return hand.replace(remove, "X")
+        
 
 
 
@@ -133,6 +125,6 @@ p2.addHand(c2)
 p2.addHand(c3)
 p2.addHand(c4)
 print ("going to showHand() of the dealer")
-p2.showHand()
+print(p2.showHand())
 print ("\ngoing to show dealersHand() of the dealer")
-p2.dealersHand()
+print(p2.dealersHand())
