@@ -77,7 +77,7 @@ deck = Deck()
 c1 = deck.cards[0]
 c2 = deck.cards[10]
 c3 = deck.cards[36]
-c4 = deck.cards[48]
+c4 = deck.cards[51]
 c1.show()
 c2.show()
 c3.show()
