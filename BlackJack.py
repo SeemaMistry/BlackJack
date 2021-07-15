@@ -5,9 +5,16 @@ class BlackJack:
         # initialize game:
         # deck
         # shuffle the deck
+        self.deck = Deck()
+        self.deck.shuffle()
         # dealer
+        self.dealer = Dealer()
         # allPlayers
-        # gameCount = 1
+        self.allPlayers = []
+        # allPlayerStatus = true (as long as one player has player_status as true, not including dealer)
+        self.allPlayerStatus = True
+        # gameCount = 0
+        self.gameCount = 0
 
     # addPlayer(playerName) - add a new player to allPlayer
 
@@ -28,8 +35,29 @@ class BlackJack:
 
     # bust(player) - message for player gone bust
 
-    # newGame() - reset all assests to start a new game. Call Player.deleteHand (including dealer's), deck.build().shuffle(). Increment gameCount
+    # clearHands() - reset all assests to start a new game. Call Player.deleteHand (including dealer's), deck.build().shuffle(). Increment gameCount
 
-    # reset() - reset all assets to zero, gameCount to 0 and delete all players/dealers
+    # resetDeck() - new deck and shuffle it
+    def resetDeck(self):
+        self.deck = Deck()
+        self.deck.shuffle()
+
+    # newGame() - deal out cards to player and dealer. Loop till someone wins
+
+    # delete() - reset all assets to zero, gameCount to 0 and delete all players/dealers
+
+
+# Test July 15th 2021
+# Test initialized BlackJack attributes
+game = BlackJack()
+# make a deck and start pulling cards
+game.deck.topCard().show()
+game.deck.topCard().show()
+game.deck.topCard().show()
+game.deck.topCard().show()
+print(game.deck.count)
+# test that a new deck is being made
+game.resetDeck()
+print(game.deck.count)
 
     
