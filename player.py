@@ -9,15 +9,26 @@ class Player:
         self.name = name # name the player
         self.hand = [] # all the cards player has is stored in array
         # NEED TO ADD SELF.SPAREHAND = [] FOR CASES WHEN PLAYER SPLITS HAND WITH 2 ACES
+        # self.2ndhand = []
+        # self.2ndtotal = 0
+        self.total = 0 # counts the cards value held in self.hand
+        self.ace = False # just to check if the player holds an Ace card (due to double numVal ace hold of 11 and 1)
 
     def deleteHand(self):
         # clear all the cards from the deck
         self.hand.clear()
         print("{}, has no cards".format(self.name))
 
+    # add card to player's hand and add num count 
     def addHand(self, card):
         # add a Card Object to your hand
         self.hand.append(card)
+        # check if card is an ace
+        if card.value == "Ace":
+            self.ace = True
+        # increment the card's value to self.total
+        # caviott: if the hand has an ACE then need to check later in BJ class if the 2nd value of one is needed.
+        self.total += card.numVal
 
     # show hand needs to call on Card.show()
     def showHand(self):
@@ -128,3 +139,4 @@ print ("going to showHand() of the dealer")
 print(p2.showHand())
 print ("\ngoing to show dealersHand() of the dealer")
 print(p2.dealersHand())
+print(p2.total)
