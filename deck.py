@@ -7,6 +7,7 @@ class Deck:
         self.cards = []
         # initalize a built deck of 52 cards of 4 suits
         self.build() 
+        self.count = 52
 
     def build(self):
         # use double for loops to create Card objects
@@ -45,6 +46,7 @@ class Deck:
     def topCard(self):
         # pop off the top card (index=0) of the deck. Return Card Object
         topCard = self.cards.pop(0)
+        self.count -= 1
         return topCard
 
     # return random card from anywhere in the deck
@@ -54,6 +56,7 @@ class Deck:
         # randomly select cards from 0 to len-1
         ranCard = random.randint(0, numCards-1)
         # print("\t random card is {}".format(ranCard))
+        self.count -= 1
         return self.cards.pop(ranCard)
 
 
@@ -70,16 +73,16 @@ class Deck:
 
 # Test 2 - June 30/2021
 # Testing Card Object's new attribute numVal and numVal2 are working at deck creation
-deck = Deck()
-deck.shuffle()
-print("\nAnd a random card of your shuffled deck selected is: ")
-r = deck.randomCard()
-r.show()
-print(r.numVal)
+# deck = Deck()
+# deck.shuffle()
+# print("\nAnd a random card of your shuffled deck selected is: ")
+# r = deck.randomCard()
+# r.show()
+# print(r.numVal)
 
-# Test 3 - July 6/2021
-# Testing refractored Card class (making new inherited Ace class for numVal2) to see if both Ace values appear
-if r.value == "Ace":
-    print(r.numVal2)
+# # Test 3 - July 6/2021
+# # Testing refractored Card class (making new inherited Ace class for numVal2) to see if both Ace values appear
+# if r.value == "Ace":
+#     print(r.numVal2)
 
 
