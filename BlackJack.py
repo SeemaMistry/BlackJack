@@ -16,9 +16,25 @@ class BlackJack:
         # gameCount = 0
         self.gameCount = 0
 
-    # addPlayer(playerName) - add a new player to allPlayer
+    # addPlayer(str playerName) - add a new player to allPlayer
+    def addPlayer(self, name):
+        # check if name already exists in list of players. If it does, then have to add name change to player by appending some num at end
+        instances = 0
+        for player in self.allPlayers:
+            if player.name == name:
+                instances += 1
+        if instances != 0:
+            # this doesnt work, just ask the player to change their name
+            name += str(instances)
+
+        newplayer = Player(name)
+        self.allPlayers.append(newplayer)
+        print("Welcome to the game player {}".format(newplayer.name))
+
 
     # deletePlayer(playerName) - remove specified player
+    #def deletePlayer(self, name):
+
     
     # hit(player) - get the top card (via deck.topCard) and add it to player hand (player.addHand). Then check if player's count goes above 21
 
@@ -59,5 +75,16 @@ print(game.deck.count)
 # test that a new deck is being made
 game.resetDeck()
 print(game.deck.count)
+
+game.addPlayer("A")
+game.addPlayer("B")
+game.addPlayer("C")
+game.addPlayer("A")
+game.addPlayer("A")
+
+
+
+
+
 
     
