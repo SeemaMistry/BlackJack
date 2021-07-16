@@ -125,18 +125,18 @@ class Dealer(Player):
 
 # Test 4 - July 13th
 # test out dealer class
-deck = Deck()
-c1 = deck.cards[0]
-c2 = deck.cards[10]
-c3 = deck.cards[36]
-c4 = deck.cards[51]
-p2 = Dealer()
-p2.addHand(c1)
-p2.addHand(c2)
-p2.addHand(c3)
-p2.addHand(c4)
-print ("going to showHand() of the dealer")
-print(p2.showHand())
-print ("\ngoing to show dealersHand() of the dealer")
-print(p2.dealersHand())
-print(p2.total)
+# deck = Deck()
+# c1 = deck.cards[0]
+# c2 = deck.cards[10]
+# c3 = deck.cards[36]
+# c4 = deck.cards[51]
+# p2 = Dealer()
+# p2.addHand(c1)
+# p2.addHand(c2)
+# p2.addHand(c3)
+# p2.addHand(c4)
+# print ("going to showHand() of the dealer")
+# print(p2.showHand())
+# print ("\ngoing to show dealersHand() of the dealer")
+# print(p2.dealersHand())
+# print(p2.total)
