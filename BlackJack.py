@@ -61,6 +61,18 @@ class BlackJack:
     # newGame() - deal out cards to player and dealer. Loop till someone wins
 
     # delete() - reset all assets to zero, gameCount to 0 and delete all players/dealers
+    def delete(self):
+        # reset the dealer
+        self.dealer = Dealer()
+        # reset the player
+        self.allPlayers = []
+        self.allPlayerStatus = True
+        # reset game count
+        self.gameCount = 0
+
+
+
+
 
 
 # Test July 15th 2021
