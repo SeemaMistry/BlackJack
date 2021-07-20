@@ -44,14 +44,23 @@ class BlackJack:
     #               if only bust and no ace, then change Player.player_status to false
 
     # pass(player) - player wants no more cards. Change Player.player_status to false
+    def pass(self, player_index):
+        (self.allPlayers[player_index]).player_status = False
+
 
     # call() - check all Player.total to determine winner against the dealer
 
     # win(player) - message for winning player. Add point to Player.points
 
-    # bust(player) - message for player gone bust
+    # bust(player) - check if player gone bust. if they do then send message
 
     # clearHands() - reset all assests to start a new game. Call Player.deleteHand (including dealer's), deck.build().shuffle(). Increment gameCount
+    def clearHands(self):
+        # clear dealer's hand
+        self.dealer.deleteHand()
+        # clear all player's hand
+        for people in self.allPlayers:
+            people.deleteHand()
 
     # resetDeck() - new deck and shuffle it
     def resetDeck(self):
