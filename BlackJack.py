@@ -1,3 +1,4 @@
+from card import Ace
 from player import Player, Dealer, Deck, Card
 # Game rules:
 # All players and dealer given 2 cards.
@@ -127,6 +128,10 @@ class BlackJack:
                     # over 21 so bust
                     self.allPlayers[player_index].player_status = False
                     print(self.bust(player_index, self.allPlayers[player_index].total))
+
+                elif self.allPlayers[player_index].total == 21:
+                    # got to 21
+                    print(self.winner(player_index))
             else:
                 # if over 21 but no ace, then change player status to false
                 self.allPlayers[player_index].player_status = False
@@ -341,6 +346,20 @@ ace = Card("Spades", "Ace", 11)
 royal = Card("Spades", "King", 10)
 game.allPlayers[2].addHand(ace)
 game.allPlayers[2].addHand(royal)
+print(game.allPlayers[2].showHand())
+print(game.allPlayers[2].total)
+
+game.checkTotal(2)
+
+# test with card values: 10, 10, 1
+game.addPlayer()
+ace = Ace("Spades", "Ace", 11, 1)
+ten = Card("Spades", "10", 10)
+royal = Card("Spades", "King", 10)
+game.allPlayers[2].addHand(ten)
+game.allPlayers[2].addHand(royal)
+game.allPlayers[2].addHand(ace)
+print(game.allPlayers[2].ace)
 print(game.allPlayers[2].showHand())
 print(game.allPlayers[2].total)
 
