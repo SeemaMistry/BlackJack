@@ -47,16 +47,10 @@ class BlackJack:
                 print("Welcome to the game player {}".format(newplayer.name))
 
                 
-
-        # # check if name exists already. If name exists already, tell player to rename themselves
-        # for player in self.allPlayers:
-        #     if player.name == name:
-        #         print ("The name '{}' already exists. Please input another name")
-        #         # right now assuming player puts in a new name 
-        #         name = input("Enter your name: ")
-
-    # deletePlayer(playerName) - remove specified player
-    #def deletePlayer(self, name):
+    # deletePlayer(player_index) - remove specified player
+    def deletePlayer(self, player_index):
+        name = self.allPlayers.pop(player_index).name
+        print("\nPlayer '{}' has been removed from the game\n".format(name))
 
     
     # hit(player) - get the top card (via deck.topCard) and add it to player hand (player.addHand). Then check if player's count goes above 21
@@ -135,6 +129,7 @@ game.addPlayer()
 game.addPlayer()
 game.addPlayer()
 game.addPlayer()
+game.deletePlayer(2)
 
 
 
