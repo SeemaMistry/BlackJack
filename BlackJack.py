@@ -92,12 +92,18 @@ class BlackJack:
                 # check total to see if player has gone bust or not. If bust, change player_status to false
                 self.checkTotal(player_index)
             else:
-                # player_status is false -> do not give card, give error statement
+                # player_status is false: do not give card, give error statement
                 print("Error: Player '{}' can NOT recieve anymore cards".format(self.allPlayers[player_index].name))
 
 # NEED TO ADD STATEMENT OF >=17. MAKE THIS A LOOP FOR MORE THAN 2 CARDS
     def hitDealer(self):
-        self.dealer.addHand(self.deck.topCard())
+        # if dealer has <2 cards (0,1,2), just give the dealer the single card
+        if len(self.dealer.hand) < 2:
+            self.dealer.addHand(self.deck.topCard())
+        else:
+            # if dealer has 2 cards, keep giving dealer cards until total >= 17
+            while self.dealer.total < 18:
+                self.dealer.addHand(self.deck.topCard())
 
 # --------------------------------------------------------
 # -------------- HAND COUNT FOR WIN/BUST ---------------
