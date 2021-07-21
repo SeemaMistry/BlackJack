@@ -102,7 +102,7 @@ class BlackJack:
             self.dealer.addHand(self.deck.topCard())
         else:
             # if dealer has 2 cards, keep giving dealer cards until total >= 17
-            while self.dealer.total < 18:
+            while self.dealer.total < 17:
                 self.dealer.addHand(self.deck.topCard())
 
 # --------------------------------------------------------
