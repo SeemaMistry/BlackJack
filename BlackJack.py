@@ -15,21 +15,6 @@ class BlackJack:
         self.allPlayerStatus = True
         # gameCount = 0
         self.gameCount = 0
-
-    # addPlayer(str playerName) - add a new player to allPlayer
-    # def addPlayer(self, name):
-    #     # check if name already exists in list of players. If it does, then have to add name change to player by appending some num at end
-    #     instances = 0
-    #     for player in self.allPlayers:
-    #         if player.name == name:
-    #             instances += 1
-    #     if instances != 0:
-    #         # this doesnt work, just ask the player to change their name
-    #         name += str(instances)
-
-    #     newplayer = Player(name)
-    #     self.allPlayers.append(newplayer)
-    #     print("Welcome to the game player {}".format(newplayer.name))
     
     # validName(name) -> Bool - checks user inputed name against list of all player's name. If name already exists return false, else true
     def validName(self, name):
@@ -41,31 +26,22 @@ class BlackJack:
                     validity = False
         return validity
 
-
     def addPlayer(self):
         # get player input for name
         name = input("Enter your name: ")
-        validName = False
+        validN = False
         # loop through until user gives unique player name that does not already exist
-        while validName == False:
+        while validN == False:
             # use private function validName(name) to check user inputted name against list of existing Player.name
-            #checkName = validName(name)
-
-            # try putting validName() here
-            # getting type error when i use the function "Bool no callable"
-            checkName = True
-            if len(self.allPlayers) > 0:
-                for player in self.allPlayers:
-                    if name == player.name:
-                        checkName = False
-
+            checkName = self.validName(name)
+        
             if checkName == False:
                 # user inputted name already exist, ask user for another name
                 print ("The name, '{}' already exists. Select another name".format(name))
                 name = input("Enter your name: ")
             else:
                 # user inputted name is valid. Create new Player and welcome them to the game
-                validName = True
+                validN = True
                 newplayer = Player(name)
                 self.allPlayers.append(newplayer)
                 print("Welcome to the game player {}".format(newplayer.name))
