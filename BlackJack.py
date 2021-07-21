@@ -134,7 +134,7 @@ class BlackJack:
         
         # 21 is a winner
         elif self.allPlayers[player_index].total == 21:
-            self.winner(player_index)
+            print(self.winner(player_index))
 # ALSO NEED TO CHANGE PLAYER STATUS HERE TO FALSE CUZ THEY WON AND NOW ARE NOT PLAYING. OR DO THAT IN WIN
 # GIVE 3 POINTS FOR GETTING 21
             
@@ -144,8 +144,9 @@ class BlackJack:
     def winner(self, player_index):
         # take their cards away and return winner message
         self.allPlayers[player_index].deleteHand()
-# REMOVE POINTS GIVEN OR LEAVE IT IF CHANGING TO WINNER21()
-# NEED TO CHANGE PLAYER STATUS HERE AFTER YOU REMOVE THEIR CARDS
+        print(self.allPlayers[player_index].showHand())
+        # REMOVE POINTS GIVEN OR LEAVE IT IF CHANGING TO WINNER21()
+        # NEED TO CHANGE PLAYER STATUS HERE AFTER YOU REMOVE THEIR CARDS
         # give player a point
         self.allPlayers[player_index].points += 3
         return ("Player '{}' has {}, you're a winner!".format(self.allPlayers[player_index].name, 21))
@@ -277,25 +278,74 @@ class BlackJack:
 # Test July 21/2021
 # Testing checkTotal/win/bust for players
 # make a new game and add 1 player
+# game = BlackJack()
+# game.addPlayer()
+# print("\n")
+# # give player 2 cards then print their hand
+# game.hit(0)
+# game.hit(0)
+# print(game.allPlayers[0].showHand())
+# print(game.allPlayers[0].total)
+# print("\n")
+# # give player another card and print hand
+# game.hit(0)
+# print(game.allPlayers[0].showHand())
+# print(game.allPlayers[0].total)
+# print("\n")
+# # give player another card and print hand
+# game.hit(0)
+# print(game.allPlayers[0].showHand())
+# print(game.allPlayers[0].total)
+# print("\n")
+
+# now do the same but add 2 players
 game = BlackJack()
+game.addPlayer()
 game.addPlayer()
 print("\n")
 # give player 2 cards then print their hand
 game.hit(0)
+game.hit(1)
 game.hit(0)
+game.hit(1)
 print(game.allPlayers[0].showHand())
 print(game.allPlayers[0].total)
+print("\n")
+print(game.allPlayers[1].showHand())
+print(game.allPlayers[1].total)
 print("\n")
 # give player another card and print hand
 game.hit(0)
+game.hit(1)
 print(game.allPlayers[0].showHand())
 print(game.allPlayers[0].total)
+print("\n")
+print(game.allPlayers[1].showHand())
+print(game.allPlayers[1].total)
 print("\n")
 # give player another card and print hand
+print("Did anyone go bust:")
 game.hit(0)
+game.hit(1)
+print("\n")
 print(game.allPlayers[0].showHand())
 print(game.allPlayers[0].total)
 print("\n")
+print(game.allPlayers[1].showHand())
+print(game.allPlayers[1].total)
+print("\n")
+
+# Test a 3rd player with artifically manufactured 21
+game.addPlayer()
+ace = Card("Spades", "Ace", 11)
+royal = Card("Spades", "King", 10)
+game.allPlayers[2].addHand(ace)
+game.allPlayers[2].addHand(royal)
+print(game.allPlayers[2].showHand())
+print(game.allPlayers[2].total)
+
+game.checkTotal(2)
+
 
 
 
