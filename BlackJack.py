@@ -55,8 +55,21 @@ class BlackJack:
     
     # hit(player_index) - get the top card (via deck.topCard) and add it to player hand (player.addHand). Then check if player's count goes above 21
     def hit(self, player_index):
-        # get the top card from the deck and add it to specified player
-        self.allPlayers[player_index].addHand(self.deck.topCard())
+        # if giving first card, just add to player hand
+        if len(self.allPlayers[player_index].hand) > 1:
+            self.allPlayers[player_index].addHand(self.deck.topCard())
+        
+        # for more than 1 card in the deck, add and checktotal
+        else:
+            # only hit if player status is true
+            if self.allPlayers[player_index].player_status == True:
+                # get the top card from the deck and add it to specified player
+                self.allPlayers[player_index].addHand(self.deck.topCard())
+                # check total to see if player has gone bust or not. If bust, change player_status to false
+                self.checkTotal(player_index)
+            else:
+                # if player status is false then do not add card, just give bust statment
+                self.bust(player_index, self.allPlayers[player_index].total)
 
     def hitDealer(self):
         self.dealer.addHand(self.deck.topCard())
@@ -68,7 +81,7 @@ class BlackJack:
     def checkTotal(self, player_index):
         ace = self.allPlayers[player_index].ace
         # if player has over 21
-        print("Player '{}' has a total of {}".format(self.allPlayers[player_index].name, self.allPlayers[player_index].total))
+        #print("Player '{}' has a total of {}".format(self.allPlayers[player_index].name, self.allPlayers[player_index].total))
         if self.allPlayers[player_index].total > 21:
             
             # check if player holds an ace (double value of 11 and 1)
@@ -80,24 +93,35 @@ class BlackJack:
                     # over 21 so bust
                     self.allPlayers[player_index].player_status = False
                     print(self.bust(player_index, self.allPlayers[player_index].total))
-            
             else:
                 # if over 21 but no ace, then change player status to false
                 self.allPlayers[player_index].player_status = False
                 print(self.bust(player_index, self.allPlayers[player_index].total))
-              
+        
+        # 21 is a winner
+        elif self.allPlayers[player_index].total == 21:
+            self.winner(player_index)
+            # take their cards away
+            self.allPlayers[player_index].deleteHand()
 
         
 
     # pass(player) - player wants no more cards. Change Player.player_status to false
-    def ppass(self, player_index):
+    def stay(self, player_index):
         (self.allPlayers[player_index]).player_status = False
 
 
     # call() - check all Player.total to determine winner against the dealer
+    def call():
+        # get dealer's total
+        # check each player's status. 
+        pass
 
 
     # win(player) - message for winning player. Add point to Player.points
+    def winner(self, player_index):
+        self.allPlayers[player_index].points += 1
+        return ("Player '{}' has {}, you're a winner!".format(self.allPlayers[player_index].name, 21))
 
     # bust(player) - check if player gone bust. if they do then send message
     def bust(self, player_index, num):
