@@ -75,12 +75,12 @@ class BlackJack:
         # check if they got 21 using checkTotal(). If they didnt, itll do nothing
         self.checkTotal(player_index)
 
-        
+
     
     # hit(player_index) - get the top card (via deck.topCard) and add it to player hand (player.addHand). Then check if player's count goes above 21
     def hit(self, player_index):
         # if giving first card, just add to player hand
-        if len(self.allPlayers[player_index].hand) > 1:
+        if len(self.allPlayers[player_index].hand) < 1 and self.allPlayers[player_index].player_status == True:
             self.allPlayers[player_index].addHand(self.deck.topCard())
         
         # for more than 1 card in the deck, add and checktotal
@@ -152,6 +152,10 @@ class BlackJack:
 
     # bust(player) - When player goes bust: remove their hand and give bust message. No points given
     def bust(self, player_index, num):
+# I just want to see the player's hand
+        print(self.allPlayers[player_index].showHand())
+        # change player status!!!! Otherwise youll delete their hand and keep giving them cards!!
+        self.allPlayers[player_index].player_status = False
         # remove player's hand then return statment
         self.allPlayers[player_index].deleteHand()
         return ("Player '{}' has {}, it's a bust!".format(self.allPlayers[player_index].name, num))
@@ -233,34 +237,65 @@ class BlackJack:
 
 # Test July 21st 2021
 # Test addPlayer(). Make sure only unique names get added
+# game = BlackJack()
+# game.addPlayer()
+# game.addPlayer()
+# game.addPlayer()
+# game.addPlayer()
+# # game.addPlayer()
+# # game.addPlayer()
+# game.deletePlayer(2)
+# game.hit(0)
+# game.hit(0)
+# game.hit(0)
+# game.hit(0)
+
+# game.hit(1)
+# game.hit(1)
+# game.hit(1)
+# game.hit(2)
+# game.hit(2)
+
+# game.hitDealer()
+# game.hitDealer()
+# game.hitDealer()
+# print(game.allPlayers[0].showHand())
+# print(game.allPlayers[1].showHand())
+# print(game.allPlayers[2].showHand())
+
+# print("\n")
+# print(game.dealer.dealersHand())
+# print(game.dealer.showHand())
+# print("The dealer's total is: {}\n".format(game.dealer.total))
+
+# print("\n")
+# game.checkTotal(0)
+# game.checkTotal(1)
+# game.checkTotal(2)
+
+
+# Test July 21/2021
+# Testing checkTotal/win/bust for players
+# make a new game and add 1 player
 game = BlackJack()
 game.addPlayer()
-game.addPlayer()
-game.addPlayer()
-game.addPlayer()
-# game.addPlayer()
-# game.addPlayer()
-game.deletePlayer(2)
+print("\n")
+# give player 2 cards then print their hand
 game.hit(0)
 game.hit(0)
-game.hit(0)
-game.hit(1)
-game.hit(1)
-game.hit(2)
-game.hit(2)
-
-game.hitDealer()
-game.hitDealer()
-game.hitDealer()
 print(game.allPlayers[0].showHand())
-print(game.allPlayers[1].showHand())
-print(game.allPlayers[2].showHand())
-print(game.dealer.dealersHand())
-game.checkTotal(0)
-game.checkTotal(1)
-game.checkTotal(2)
-print("The dealer's total is: {}".format(game.dealer.total))
-
+print(game.allPlayers[0].total)
+print("\n")
+# give player another card and print hand
+game.hit(0)
+print(game.allPlayers[0].showHand())
+print(game.allPlayers[0].total)
+print("\n")
+# give player another card and print hand
+game.hit(0)
+print(game.allPlayers[0].showHand())
+print(game.allPlayers[0].total)
+print("\n")
 
 
 
