@@ -70,7 +70,12 @@ class BlackJack:
 # --------------------------------------------------------
     # stay(player) - player wants no more cards. Change Player.player_status to false
     def stay(self, player_index):
+        # change player status to false
         (self.allPlayers[player_index]).player_status = False
+        # check if they got 21 using checkTotal(). If they didnt, itll do nothing
+        self.checkTotal(player_index)
+
+        
     
     # hit(player_index) - get the top card (via deck.topCard) and add it to player hand (player.addHand). Then check if player's count goes above 21
     def hit(self, player_index):
@@ -86,10 +91,13 @@ class BlackJack:
                 self.allPlayers[player_index].addHand(self.deck.topCard())
                 # check total to see if player has gone bust or not. If bust, change player_status to false
                 self.checkTotal(player_index)
+# PLAYER_STATUS IS FALSE THEN DO NOTHING. CHECKTOTAL HANDLES BUST STATMENT ALREADY
+# GIVE GENERIC ERROR STATEMENT INSTEAD "This player can no longer get cards"
             else:
                 # if player status is false then do not add card, just give bust statment
                 self.bust(player_index, self.allPlayers[player_index].total)
 
+# NEED TO ADD STATEMENT OF >=17. MAKE THIS A LOOP FOR MORE THAN 2 CARDS
     def hitDealer(self):
         self.dealer.addHand(self.deck.topCard())
 
@@ -106,7 +114,6 @@ class BlackJack:
         # if player has over 21
         #print("Player '{}' has a total of {}".format(self.allPlayers[player_index].name, self.allPlayers[player_index].total))
         if self.allPlayers[player_index].total > 21:
-            
             # check if player holds an ace (double value of 11 and 1)
             if ace == True:
                 # if there is an ace (and total > 21), has double value of 11 and 1. Add -10 to total
@@ -124,11 +131,17 @@ class BlackJack:
         # 21 is a winner
         elif self.allPlayers[player_index].total == 21:
             self.winner(player_index)
+# ALSO NEED TO CHANGE PLAYER STATUS HERE TO FALSE CUZ THEY WON AND NOW ARE NOT PLAYING. OR DO THAT IN WIN
+# GIVE 3 POINTS FOR GETTING 21
             
     # win(player) - When player gets 21: give message for winning player, remove their cards, and add 3 points to Player.points
+# CHANGE TO winnerMsg i.e. JUST GIVE MESSAGE TO PLAYER
+# OR CHANGE TO WINNER21() THIS WAY YOU CAN KEEP THE POINTS +=3 AND GIVE SPECIAL MESSAGE OF WINNING 21
     def winner(self, player_index):
         # take their cards away and return winner message
         self.allPlayers[player_index].deleteHand()
+# REMOVE POINTS GIVEN OR LEAVE IT IF CHANGING TO WINNER21()
+# NEED TO CHANGE PLAYER STATUS HERE AFTER YOU REMOVE THEIR CARDS
         # give player a point
         self.allPlayers[player_index].points += 3
         return ("Player '{}' has {}, you're a winner!".format(self.allPlayers[player_index].name, 21))
