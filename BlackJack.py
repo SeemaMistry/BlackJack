@@ -53,7 +53,13 @@ class BlackJack:
         print("\nPlayer '{}' has been removed from the game\n".format(name))
 
     
-    # hit(player) - get the top card (via deck.topCard) and add it to player hand (player.addHand). Then check if player's count goes above 21
+    # hit(player_index) - get the top card (via deck.topCard) and add it to player hand (player.addHand). Then check if player's count goes above 21
+    def hit(self, player_index):
+        # get the top card from the deck and add it to specified player
+        self.allPlayers[player_index].addHand(self.deck.topCard())
+
+    def hitDealer(self):
+        self.dealer.addHand(self.deck.topCard())
 
     # checkTotal(player) - Has 2 checks: ace and bust
     #               check if player went bust (via player.total > 21)
@@ -127,9 +133,24 @@ game.addPlayer()
 game.addPlayer()
 game.addPlayer()
 game.addPlayer()
-game.addPlayer()
-game.addPlayer()
+# game.addPlayer()
+# game.addPlayer()
 game.deletePlayer(2)
+game.hit(0)
+game.hit(0)
+game.hit(0)
+game.hit(1)
+game.hit(1)
+game.hit(2)
+game.hitDealer()
+# game.hitDealer()
+# game.hitDealer()
+print(game.allPlayers[0].showHand())
+print(game.allPlayers[1].showHand())
+print(game.allPlayers[2].showHand())
+print(game.dealer.dealersHand())
+
+
 
 
 
