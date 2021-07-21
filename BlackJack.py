@@ -1,4 +1,15 @@
 from player import Player, Dealer, Deck, Card
+# Game rules:
+# All players and dealer given 2 cards.
+# Give cards all around to player until they go bust or stay
+# Dealer given cards at the end. Must have hand total >=17
+#
+# Winners and Losers:
+#   - 2 cards add to 21 (winner) -> +3 points
+#   - 2+ cards add up to 21 (winner) -> +3 points
+#   - 2+ cards >21 but <Dealer's total (win) -> +1 point
+#   - 2+cards <21 (bust) -> +0
+# 
 
 class BlackJack:
     def __init__(self):
@@ -15,7 +26,9 @@ class BlackJack:
         self.allPlayerStatus = True
         # gameCount = 0
         self.gameCount = 0
-    
+# --------------------------------------------------------
+# -------------- CREATE AND DELETE PLAYERS ---------------
+# --------------------------------------------------------
     # validName(name) -> Bool - checks user inputed name against list of all player's name. If name already exists return false, else true
     def validName(self, name):
         # checks user inputted name against all
@@ -52,6 +65,12 @@ class BlackJack:
         name = self.allPlayers.pop(player_index).name
         print("\nPlayer '{}' has been removed from the game\n".format(name))
 
+# --------------------------------------------------------
+# -------------- PLAYER AND DEALER MOVES ---------------
+# --------------------------------------------------------
+    # stay(player) - player wants no more cards. Change Player.player_status to false
+    def stay(self, player_index):
+        (self.allPlayers[player_index]).player_status = False
     
     # hit(player_index) - get the top card (via deck.topCard) and add it to player hand (player.addHand). Then check if player's count goes above 21
     def hit(self, player_index):
@@ -73,6 +92,10 @@ class BlackJack:
 
     def hitDealer(self):
         self.dealer.addHand(self.deck.topCard())
+
+# --------------------------------------------------------
+# -------------- HAND COUNT FOR WIN/BUST ---------------
+# --------------------------------------------------------
 
     # checkTotal(player) - Has 2 checks: ace and bust
     #               check if player went bust (via player.total > 21)
@@ -102,36 +125,31 @@ class BlackJack:
         elif self.allPlayers[player_index].total == 21:
             self.winner(player_index)
             
-
-        
-
-    # pass(player) - player wants no more cards. Change Player.player_status to false
-    def stay(self, player_index):
-        (self.allPlayers[player_index]).player_status = False
-
-
-    # call() - check all Player.total to determine winner against the dealer
-    def compare2dealer():
-        # get dealer's total
-        # check each player's status. 
-        pass
-
-
-    # win(player) - message for winning player. Add point to Player.points
+    # win(player) - When player gets 21: give message for winning player, remove their cards, and add 3 points to Player.points
     def winner(self, player_index):
         # take their cards away and return winner message
         self.allPlayers[player_index].deleteHand()
         # give player a point
-        self.allPlayers[player_index].points += 1
+        self.allPlayers[player_index].points += 3
         return ("Player '{}' has {}, you're a winner!".format(self.allPlayers[player_index].name, 21))
 
-    # bust(player) - check if player gone bust. if they do then send message
+    # bust(player) - When player goes bust: remove their hand and give bust message. No points given
     def bust(self, player_index, num):
         # remove player's hand then return statment
         self.allPlayers[player_index].deleteHand()
         return ("Player '{}' has {}, it's a bust!".format(self.allPlayers[player_index].name, num))
 
-    # clearHands() - reset all assests to start a new game. Call Player.deleteHand (including dealer's), deck.build().shuffle(). Increment gameCount
+   # call() - check all Player.total to determine winner against the dealer
+    def compare2dealer():
+        # get dealer's total
+        # check each player's status. 
+        pass
+
+# --------------------------------------------------------
+# -------------- RESET FOR A NEW ROUND ---------------
+# --------------------------------------------------------
+
+    # clearHands() - reset all players to start a new game. Call Player.deleteHand (including dealer's)
     def clearHands(self):
         # clear dealer's hand
         self.dealer.deleteHand()
@@ -143,8 +161,24 @@ class BlackJack:
     def resetDeck(self):
         self.deck = Deck()
         self.deck.shuffle()
-
+ 
     # newGame() - deal out cards to player and dealer. Loop till someone wins
+    def newGame():
+        # INCREMENT GAME COUNT
+        # loop through and add player's until user says no more players 
+        # in a loop, give each player 2 cards, including dealer
+        # call on each player and ask for hit/stay
+            # has anyone got 21? -> give winning statment + points, remove their cards
+            # has anyone gone bust? -> give bust statement, remove their cards
+        # once all players are stay (but not at 21) let dealer hit (has to hit if below 17)
+        # compare remaining players (>21) to dealer. 
+            # Anyone above dealer's value but >22 wins -> take away their cards and give them 0.5 points
+            # anyone <dealer losses -> take away their cards
+        pass
+
+# --------------------------------------------------------
+# -------------- RESET FOR A NEW GAME ---------------
+# --------------------------------------------------------
 
     # delete() - reset all assets to zero, gameCount to 0 and delete all players/dealers
     def delete(self):
@@ -195,15 +229,20 @@ game.hit(0)
 game.hit(0)
 game.hit(1)
 game.hit(1)
-#game.hit(2)
-#game.hitDealer()
-# game.hitDealer()
-# game.hitDealer()
+game.hit(2)
+game.hit(2)
+
+game.hitDealer()
+game.hitDealer()
+game.hitDealer()
 print(game.allPlayers[0].showHand())
 print(game.allPlayers[1].showHand())
 print(game.allPlayers[2].showHand())
 print(game.dealer.dealersHand())
 game.checkTotal(0)
+game.checkTotal(1)
+game.checkTotal(2)
+print("The dealer's total is: {}".format(game.dealer.total))
 
 
 
