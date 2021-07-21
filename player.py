@@ -17,6 +17,7 @@ class Player:
     def deleteHand(self):
         # clear all the cards from the deck
         self.hand.clear()
+        self.total = 0
         print("{}, has no cards".format(self.name))
 
     # add card to player's hand and add num count 
@@ -56,14 +57,22 @@ class Dealer(Player):
         hand = self.showHand()
         # start at first ":" (but in for loop got +2 to include spacing)
         i = hand.find(":")
-        # stop at first comma ","
-        k = hand.find(",")
-        remove = ''
-        # add all letters from start to stop-1 into a string
-        for letter in range (i+2, k):
-            remove += hand[letter]
-        # replace the string in remove with and empty X
-        return hand.replace(remove, "X")
+        if len(self.hand) > 1:
+            # stop at first comma ","
+            k = hand.find(",")
+            remove = ''
+            # add all letters from start to stop-1 into a string
+            for letter in range (i+2, k):
+                remove += hand[letter]
+            # replace the string in remove with and empty X
+            return hand.replace(remove, "X")
+        elif len(self.hand) == 1:
+            remove = ''
+            for letter in range (i+2, len(hand)):
+                remove += hand[letter]
+            return hand.replace(remove, "X")
+        else:
+            return hand
         
 
 
