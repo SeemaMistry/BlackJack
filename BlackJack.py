@@ -101,8 +101,7 @@ class BlackJack:
         # 21 is a winner
         elif self.allPlayers[player_index].total == 21:
             self.winner(player_index)
-            # take their cards away
-            self.allPlayers[player_index].deleteHand()
+            
 
         
 
@@ -112,7 +111,7 @@ class BlackJack:
 
 
     # call() - check all Player.total to determine winner against the dealer
-    def call():
+    def compare2dealer():
         # get dealer's total
         # check each player's status. 
         pass
@@ -120,11 +119,16 @@ class BlackJack:
 
     # win(player) - message for winning player. Add point to Player.points
     def winner(self, player_index):
+        # take their cards away and return winner message
+        self.allPlayers[player_index].deleteHand()
+        # give player a point
         self.allPlayers[player_index].points += 1
         return ("Player '{}' has {}, you're a winner!".format(self.allPlayers[player_index].name, 21))
 
     # bust(player) - check if player gone bust. if they do then send message
     def bust(self, player_index, num):
+        # remove player's hand then return statment
+        self.allPlayers[player_index].deleteHand()
         return ("Player '{}' has {}, it's a bust!".format(self.allPlayers[player_index].name, num))
 
     # clearHands() - reset all assests to start a new game. Call Player.deleteHand (including dealer's), deck.build().shuffle(). Increment gameCount
