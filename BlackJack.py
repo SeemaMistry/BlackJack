@@ -17,20 +17,67 @@ class BlackJack:
         self.gameCount = 0
 
     # addPlayer(str playerName) - add a new player to allPlayer
-    def addPlayer(self, name):
-        # check if name already exists in list of players. If it does, then have to add name change to player by appending some num at end
-        instances = 0
-        for player in self.allPlayers:
-            if player.name == name:
-                instances += 1
-        if instances != 0:
-            # this doesnt work, just ask the player to change their name
-            name += str(instances)
+    # def addPlayer(self, name):
+    #     # check if name already exists in list of players. If it does, then have to add name change to player by appending some num at end
+    #     instances = 0
+    #     for player in self.allPlayers:
+    #         if player.name == name:
+    #             instances += 1
+    #     if instances != 0:
+    #         # this doesnt work, just ask the player to change their name
+    #         name += str(instances)
 
-        newplayer = Player(name)
-        self.allPlayers.append(newplayer)
-        print("Welcome to the game player {}".format(newplayer.name))
+    #     newplayer = Player(name)
+    #     self.allPlayers.append(newplayer)
+    #     print("Welcome to the game player {}".format(newplayer.name))
+    
+    # validName(name) -> Bool - checks user inputed name against list of all player's name. If name already exists return false, else true
+    def validName(self, name):
+        # checks user inputted name against all
+        validity = True
+        if len(self.allPlayers) > 0:
+            for player in self.allPlayers:
+                if name == player.name:
+                    validity = False
+        return validity
 
+
+    def addPlayer(self):
+        # get player input for name
+        name = input("Enter your name: ")
+        validName = False
+        # loop through until user gives unique player name that does not already exist
+        while validName == False:
+            # use private function validName(name) to check user inputted name against list of existing Player.name
+            #checkName = validName(name)
+
+            # try putting validName() here
+            # getting type error when i use the function "Bool no callable"
+            checkName = True
+            if len(self.allPlayers) > 0:
+                for player in self.allPlayers:
+                    if name == player.name:
+                        checkName = False
+
+            if checkName == False:
+                # user inputted name already exist, ask user for another name
+                print ("The name, '{}' already exists. Select another name".format(name))
+                name = input("Enter your name: ")
+            else:
+                # user inputted name is valid. Create new Player and welcome them to the game
+                validName = True
+                newplayer = Player(name)
+                self.allPlayers.append(newplayer)
+                print("Welcome to the game player {}".format(newplayer.name))
+
+                
+
+        # # check if name exists already. If name exists already, tell player to rename themselves
+        # for player in self.allPlayers:
+        #     if player.name == name:
+        #         print ("The name '{}' already exists. Please input another name")
+        #         # right now assuming player puts in a new name 
+        #         name = input("Enter your name: ")
 
     # deletePlayer(playerName) - remove specified player
     #def deletePlayer(self, name):
@@ -44,7 +91,7 @@ class BlackJack:
     #               if only bust and no ace, then change Player.player_status to false
 
     # pass(player) - player wants no more cards. Change Player.player_status to false
-    def pass(self, player_index):
+    def ppass(self, player_index):
         (self.allPlayers[player_index]).player_status = False
 
 
@@ -86,22 +133,32 @@ class BlackJack:
 
 # Test July 15th 2021
 # Test initialized BlackJack attributes
-game = BlackJack()
-# make a deck and start pulling cards
-game.deck.topCard().show()
-game.deck.topCard().show()
-game.deck.topCard().show()
-game.deck.topCard().show()
-print(game.deck.count)
-# test that a new deck is being made
-game.resetDeck()
-print(game.deck.count)
+# game = BlackJack()
+# # make a deck and start pulling cards
+# game.deck.topCard().show()
+# game.deck.topCard().show()
+# game.deck.topCard().show()
+# game.deck.topCard().show()
+# print(game.deck.count)
+# # test that a new deck is being made
+# game.resetDeck()
+# print(game.deck.count)
 
-game.addPlayer("A")
-game.addPlayer("B")
-game.addPlayer("C")
-game.addPlayer("A")
-game.addPlayer("A")
+# game.addPlayer("A")
+# game.addPlayer("B")
+# game.addPlayer("C")
+# game.addPlayer("A")
+# game.addPlayer("A")
+
+# Test July 21st 2021
+# Test addPlayer(). Make sure only unique names get added
+game = BlackJack()
+game.addPlayer()
+game.addPlayer()
+game.addPlayer()
+game.addPlayer()
+game.addPlayer()
+game.addPlayer()
 
 
 
