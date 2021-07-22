@@ -131,7 +131,7 @@ class BlackJack:
 
                 elif self.allPlayers[player_index].total == 21:
                     # got to 21
-                    print(self.winner21(player_index))
+                    print(self.winner(player_index))
             else:
                 # if over 21 but no ace, then change player status to false
                 self.allPlayers[player_index].player_status = False
@@ -139,35 +139,30 @@ class BlackJack:
         
         # 21 is a winner
         elif self.allPlayers[player_index].total == 21:
-            print(self.winner21(player_index))
+            print(self.winner(player_index))
 # ALSO NEED TO CHANGE PLAYER STATUS HERE TO FALSE CUZ THEY WON AND NOW ARE NOT PLAYING. OR DO THAT IN WIN
 # GIVE 3 POINTS FOR GETTING 21
             
     # win(player) - When player gets 21: give message for winning player, remove their cards, and add 3 points to Player.points
 # CHANGE TO winnerMsg i.e. JUST GIVE MESSAGE TO PLAYER
 # OR CHANGE TO WINNER21() THIS WAY YOU CAN KEEP THE POINTS +=3 AND GIVE SPECIAL MESSAGE OF WINNING 21
-    def winner21(self, player_index):
-        # take their cards away and return winner message
-        self.allPlayers[player_index].player_status = False
-        self.allPlayers[player_index].deleteHand()
-        print(self.allPlayers[player_index].showHand())
-        # REMOVE POINTS GIVEN OR LEAVE IT IF CHANGING TO WINNER21()
-        # NEED TO CHANGE PLAYER STATUS HERE AFTER YOU REMOVE THEIR CARDS
-        # give player a point
-        self.allPlayers[player_index].points += 3
-        return ("Player '{}' has {}, you're a winner!".format(self.allPlayers[player_index].name, 21))
-
-    def winnerReg(self, player_index):
-        # store their hand total
+    def winner(self, player_index):
+        # store player hand total
         total =  self.allPlayers[player_index].total
-        # give them 1 point 
-        self.allPlayers[player_index].points += 1 
         # take their cards away and change player status to false
         self.allPlayers[player_index].player_status = False
         self.allPlayers[player_index].deleteHand()
-        # give winning message. They did not get 21 but they won against the dealer
-        return ("{} to {}\nPlayer '{}' has bested the Dealer! You won!".format(total, self.dealer.total, self.allPlayers[player_index].name))
-
+        # check which winning message to give (based on total == 21 or <21). Give point appropriately 
+        if total == 21:
+            # give 3 points
+            self.allPlayers[player_index].points += 3
+            return ("Player '{}' has {}, you're a winner!".format(self.allPlayers[player_index].name, 21))
+        elif total < 21:
+            # give 1 point
+            self.allPlayers[player_index].points += 1
+            return ("Player's {}, to Dealer's {}\nPlayer '{}' has won against the Dealer!".format(total, self.dealer.total, self.allPlayers[player_index].name))
+        else:
+            return "Error: This player is not a winner"
 
     # bust(player) - When player goes bust: remove their hand and give bust message. No points given
     def bust(self, player_index, num):
@@ -183,11 +178,19 @@ class BlackJack:
     def compare2dealer(self):
         # check that all player status is false
         # check each player's status. 
+        i = 0
         for player in self.allPlayers:
             # if player has cards (hand length isnt 0) check who has higher total value
-            # player > dealer -> winner, gets 1 point
-            # player <= dealer -> lose, nothing 
-        pass
+            if len(player.hand) > 0:
+                # player > dealer -> winner, gets 1 point
+                if player.total > self.dealer.total:
+                    self.winnerReg(i)
+                # player <= dealer -> lose, nothing 
+                else:
+
+            i += 1
+
+        
 
 # --------------------------------------------------------
 # -------------- RESET FOR A NEW ROUND ---------------
