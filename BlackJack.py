@@ -76,7 +76,7 @@ class BlackJack:
         # check if they got 21 using checkTotal(). If they didnt, itll do nothing
 
 #~~~~ Does it need to return self.checktotal()? or can you just call self.checktotal?
-        return self.checkTotal(player_index)
+        self.checkTotal(player_index)
 
 
     
@@ -90,10 +90,10 @@ class BlackJack:
             # give the player a card
             self.allPlayers[player_index].addHand(self.deck.topCard())
             if len(self.allPlayers[player_index].hand) > 1:
-                return self.checkTotal(player_index)
+                self.checkTotal(player_index)
         
         else:
-            return ("Error: Player '{}' can NOT recieve anymore cards".format(self.allPlayers[player_index].name))
+            print ("Error: Player '{}' can NOT recieve anymore cards".format(self.allPlayers[player_index].name))
 
 
 # NEED TO ADD STATEMENT OF >=17. MAKE THIS A LOOP FOR MORE THAN 2 CARDS
@@ -137,19 +137,19 @@ class BlackJack:
                 if self.allPlayers[player_index].total > 21:
                     # over 21 so bust
                     #self.allPlayers[player_index].player_status = False
-                    return (self.bust(player_index))
+                    self.bust(player_index)
 
                 elif self.allPlayers[player_index].total == 21:
                     # got to 21
-                    return (self.winner(player_index))
+                    self.winner(player_index)
             else:
                 # if over 21 but no ace, then change player status to false
                 #self.allPlayers[player_index].player_status = False
-                return (self.bust(player_index))
+                self.bust(player_index)
         
         # 21 is a winner
         elif self.allPlayers[player_index].total == 21:
-            return (self.winner(player_index))
+             self.winner(player_index)
 
         # # less than 21, do nothing
         # else:
@@ -174,24 +174,24 @@ class BlackJack:
         if total == 21:
             # give 3 points
             self.allPlayers[player_index].points += 3
-            return ("Player '{}' has {}, you're a winner!\n".format(self.allPlayers[player_index].name, 21))
+            print ("Player '{}' has {}, you're a winner!\n".format(self.allPlayers[player_index].name, 21))
 
 #~~~~~ should it be dealer<=21? If dealer gets 21 doesnt that mean player's without 21 loose?
 #~~~ SHouls you check dealer<21 (first and then check rest) and total > dealer
         elif total > self.dealer.total and self.dealer.total <= 21:
             # give 1 point
             self.allPlayers[player_index].points += 1
-            return ("Player's {}, to Dealer's {}\nPlayer '{}' has won against the Dealer!\n".format(total, self.dealer.total, self.allPlayers[player_index].name))
+            print ("Player's {}, to Dealer's {}\nPlayer '{}' has won against the Dealer!\n".format(total, self.dealer.total, self.allPlayers[player_index].name))
 
 #~~~ leave this else statement as a catch for now but honestly if code is working this should never show up
         else:
-            return "Error: This player is not a winner\n"
+            print ("Error: This player is not a winner\n")
 
     # bust(player) - When player goes bust: remove their hand and give bust message. No points given
     def bust(self, player_index):
         total = self.win_bust_prep(player_index)
 #~~~~ might want to store player total before deleting (so your code is similar to winner)
-        return ("Player '{}' has {}, it's a bust!\n".format(self.allPlayers[player_index].name, total))
+        print ("Player '{}' has {}, it's a bust!\n".format(self.allPlayers[player_index].name, total))
 
    # call() - check all Player.total to determine winner against the dealer
     def compare2dealer(self):
