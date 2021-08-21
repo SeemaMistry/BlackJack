@@ -62,9 +62,13 @@ class BlackJack:
 
 #~~~~ Might want to change it to player_name instead of index for easier use. Names are unique in game already so loop through, find name and index and delete player
     # deletePlayer(player_index) - remove specified player
-    def deletePlayer(self, player_index):
-        name = self.allPlayers.pop(player_index).name
-        print("\nPlayer '{}' has been removed from the game\n".format(name))
+    def deletePlayer(self, delete_name):
+        i = 0
+        for player in self.allPlayers:
+            if player.name == delete_name:
+                print("\nPlayer '{}' has been removed from the game\n".format(player.name))
+                self.allPlayers.pop(i).name
+            i += 1
 
 # --------------------------------------------------------
 # -------------- PLAYER AND DEALER MOVES ---------------
@@ -311,6 +315,9 @@ class BlackJack:
         print("List of player and their points:")
         for player in self.allPlayers:
             print("{} - {}".format(player.name, player.points))
+        
+        self.clearHands()
+        self.resetDeck()
 
 # --------------------------------------------------------
 # -------------- RESET FOR A NEW GAME ---------------
@@ -511,7 +518,15 @@ class BlackJack:
 # Testing newGame()
 g = BlackJack()
 g.newGame()
-
+request = input('What would you like to do now? Type "help" if you need help. Type "exit" if you want to exit: ')
+while request != "exit":
+    if request == "help":
+        print("Here is a list of commands you can type:\nnew game\tStart another game with existing players\ndelete player\tDelete a player\nclear\tReset and clear all assests")
+    elif request == "new game":
+        g.newGame()
+    elif request == "delete player":
+        name = input("Provide the player's name you wish to delete: ")
+        g.deletePlayer(name)
 
 
 
