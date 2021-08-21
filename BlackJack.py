@@ -151,9 +151,9 @@ class BlackJack:
         elif self.allPlayers[player_index].total == 21:
             return (self.winner(player_index))
 
-        # less than 21, do nothing
-        else:
-            pass
+        # # less than 21, do nothing
+        # else:
+        #     pass
 
 #~~~~ group together the first bit of winner() amd bust() cuz they are the same. call the helper function win_bust_prep()
     def win_bust_prep(self, player_index):
