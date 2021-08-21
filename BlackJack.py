@@ -207,28 +207,21 @@ class BlackJack:
 # if  player with hand.length = 0 -> continue and i++
 # if dealer is bust (>21) and player is less than 21 (p<21) -> player won against dealer
 # if dealer >=21: a) dealer < player -> player won against dealer. b) dealer > player -> dealer won against player
-
-#~~~~ you can merge if dealer <=21 and player.hand > 0 into one if statement and the check: a) player had more than dealer -> they win
-            if self.dealer.total <= 21:
-                # if player has cards (hand length isnt 0) check who has higher total value
-                if len(player.hand) > 0:
-                    # player > dealer -> winner, gets 1 point
-                    if player.total > self.dealer.total:
-
-#~~~ Correct spelling in winner statement here. Can get ride of the statement actually and just call self.winner(i) cuz it has correct statement
-                        print("Im in the winner: {}".format(player.name))
-                        return(self.winner(i))
-                    # player <= dealer -> lose, nothing 
-                    elif player.total <= self.dealer.total:
-                        return ("Dealer won against Player '{}'".format(player.name))
-                    else:
-                        return("Im not a winner or loser: {}".format(player.name))
+            if len(player.hand) == 0:
+                i += 1
+                continue
             else:
-                print("Dealer went bust: {}".format(self.dealer.total))
-                if player.total <= 21:
-                    return(self.winner(i))
-            # increment to next player index
-            i += 1
+                if player.total <= 21 and self.dealer.total > 21:
+                    # player won against dealer
+                    self.winner(i)
+                elif self.dealer.total <= 21:
+                    if self.dealer.total < player.total:
+                        # player won against dealer
+                        self.winner(i)
+                    elif self.dealer.total > player.total:
+                        # dealer won against player
+                        print("Dealer won against Player '{}'".format(player.name))
+                i += 1
 
 #~~~ game is over so you should probably be incrementing the game count orrrrrrrrrr it should be in newgame
 
