@@ -176,16 +176,20 @@ class BlackJack:
             self.allPlayers[player_index].points += 3
             print ("Player '{}' has {}, you're a winner!\n".format(self.allPlayers[player_index].name, 21))
 
-#~~~~~ should it be dealer<=21? If dealer gets 21 doesnt that mean player's without 21 loose?
-#~~~ SHouls you check dealer<21 (first and then check rest) and total > dealer
-        elif total > self.dealer.total and self.dealer.total <= 21:
-            # give 1 point
+        else:
             self.allPlayers[player_index].points += 1
             print ("Player's {}, to Dealer's {}\nPlayer '{}' has won against the Dealer!\n".format(total, self.dealer.total, self.allPlayers[player_index].name))
 
-#~~~ leave this else statement as a catch for now but honestly if code is working this should never show up
-        else:
-            print ("Error: This player is not a winner\n")
+# #~~~~~ should it be dealer<=21? If dealer gets 21 doesnt that mean player's without 21 loose?
+# #~~~ SHouls you check dealer<21 (first and then check rest) and total > dealer
+#         elif total > self.dealer.total and self.dealer.total <= 21:
+#             # give 1 point
+#             self.allPlayers[player_index].points += 1
+#             print ("Player's {}, to Dealer's {}\nPlayer '{}' has won against the Dealer!\n".format(total, self.dealer.total, self.allPlayers[player_index].name))
+
+# #~~~ leave this else statement as a catch for now but honestly if code is working this should never show up
+#         else:
+#             print ("Error: This player is not a winner\n")
 
     # bust(player) - When player goes bust: remove their hand and give bust message. No points given
     def bust(self, player_index):
@@ -199,6 +203,7 @@ class BlackJack:
 # ~~~ you can deal with checking later or even before this function is called         
         # check that all player status is false
         # check each player's status. 
+        print("\nNow we will compare against the dealer:")
         i = 0
         for player in self.allPlayers:
             print(player.name)
@@ -218,7 +223,7 @@ class BlackJack:
                     if self.dealer.total < player.total:
                         # player won against dealer
                         self.winner(i)
-                    elif self.dealer.total > player.total:
+                    elif self.dealer.total >= player.total:
                         # dealer won against player
                         print("Dealer won against Player '{}'".format(player.name))
                 i += 1
@@ -245,18 +250,67 @@ class BlackJack:
         self.deck.shuffle()
  
     # newGame() - deal out cards to player and dealer. Loop till someone wins
-    def newGame():
+    def newGame(self):
         # INCREMENT GAME COUNT
+        self.gameCount += 1
         # loop through and add player's until user says no more players 
+        morePlayer = "y"
+        while morePlayer == "y":
+            self.addPlayer()
+            morePlayer = input("Would you like to add another player? [y/n]: ")
+            print("\n")
         # in a loop, give each player 2 cards, including dealer
+        cards = 0
+        i = 0
+        while cards < 2:
+            self.hitDealer()
+            for player in self.allPlayers:
+                self.hit(i)
+                i += 1
+            cards += 1
+            i = 0
+
+       
+        # print everyone's cards
+        for player in self.allPlayers:
+            print(player.showHand())
+            print("\n")
+        print(self.dealer.dealersHand())
+        print("\n")
+
         # call on each player and ask for hit/stay
-            # has anyone got 21? -> give winning statment + points, remove their cards
-            # has anyone gone bust? -> give bust statement, remove their cards
+        i = 0
+        for player in self.allPlayers:
+            request = input("Player {}, would you like to hit or stay? ".format(player.name))
+            while request == "hit":
+                self.hit(i)
+                print("\n")
+                print(player.showHand())
+                # has anyone got 21? -> give winning statment + points, remove their cards
+                # has anyone gone bust? -> give bust statement, remove their cards
+                if player.player_status == True:
+                    request = input("Player {}, would you like to hit or stay? ".format(player.name))
+                else:
+                    break
+            # no more hits means player is staying now
+            self.stay(i)
+            i += 1
+         
         # once all players are stay (but not at 21) let dealer hit (has to hit if below 17)
+        self.hitDealer()
+        print(self.dealer.showHand())
+        print("\n")
+
+
         # compare remaining players (>21) to dealer. 
+        self.compare2dealer()
             # Anyone above dealer's value but >22 wins -> take away their cards and give them 0.5 points
             # anyone <dealer losses -> take away their cards
-        pass
+        
+        # show player points
+        print("List of player and their points:")
+        for player in self.allPlayers:
+            print("{} - {}".format(player.name, player.points))
 
 # --------------------------------------------------------
 # -------------- RESET FOR A NEW GAME ---------------
@@ -423,35 +477,40 @@ class BlackJack:
 # Test July 22/2021
 # test compare2dealer 
 # create a game with 3 player
+
+# g = BlackJack()
+# g.addPlayer()
+# g.addPlayer()
+# g.addPlayer()
+# # give each player and dealer 2 cards
+# print("\n")
+# g.hitDealer()
+# g.hit(0)
+# g.hit(1)
+# g.hit(2)
+# g.hitDealer()
+# g.hit(0)
+# g.hit(1)
+# g.hit(2)
+# # give each player another cardA
+# print("\nGive players another card:")
+# print(g.hit(0))
+# print(g.hit(1))
+# print(g.hit(2))
+# # print(g.allPlayers[0].showHand())
+# # print(g.allPlayers[1].showHand())
+# # print(g.allPlayers[2].showHand())
+# # give dealer more cards
+# g.hitDealer()
+
+# print(g.dealer.showHand())
+# # compare to dealer to see winners
+# print(g.compare2dealer())
+
+# Test Aug 21st 2021
+# Testing newGame()
 g = BlackJack()
-g.addPlayer()
-g.addPlayer()
-g.addPlayer()
-# give each player and dealer 2 cards
-print("\n")
-g.hitDealer()
-g.hit(0)
-g.hit(1)
-g.hit(2)
-g.hitDealer()
-g.hit(0)
-g.hit(1)
-g.hit(2)
-# give each player another cardA
-print("\nGive players another card:")
-print(g.hit(0))
-print(g.hit(1))
-print(g.hit(2))
-# print(g.allPlayers[0].showHand())
-# print(g.allPlayers[1].showHand())
-# print(g.allPlayers[2].showHand())
-# give dealer more cards
-#g.hitDealer()
-
-#print(g.dealer.showHand())
-# compare to dealer to see winners
-#print(g.compare2dealer())
-
+g.newGame()
 
 
 
