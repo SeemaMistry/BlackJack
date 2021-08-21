@@ -60,7 +60,7 @@ class BlackJack:
                 self.allPlayers.append(newplayer)
                 print("Welcome to the game player {}".format(newplayer.name))
 
-                
+#~~~~ Might want to change it to player_name instead of index for easier use. Names are unique in game already so loop through, find name and index and delete player
     # deletePlayer(player_index) - remove specified player
     def deletePlayer(self, player_index):
         name = self.allPlayers.pop(player_index).name
@@ -74,16 +74,24 @@ class BlackJack:
         # change player status to false
         (self.allPlayers[player_index]).player_status = False
         # check if they got 21 using checkTotal(). If they didnt, itll do nothing
-        self.checkTotal(player_index)
+
+#~~~~ Does it need to return self.checktotal()? or can you just call self.checktotal?
+        return self.checkTotal(player_index)
 
 
     
     # hit(player_index) - get the top card (via deck.topCard) and add it to player hand (player.addHand). Then check if player's count goes above 21
     def hit(self, player_index):
+# Ignore late comment about changing else to elif. this whole things needs to change!! The following is how it should go:
+# if player_status == true: +card to player hand. If hand <= 2, checktotal
+# else (player_status = false): return or print error error message
+
         # if giving first card, just add to player hand
         if len(self.allPlayers[player_index].hand) < 1 and self.allPlayers[player_index].player_status == True:
             self.allPlayers[player_index].addHand(self.deck.topCard())
-        
+
+ #~~~~ should change else into an elif (player_status == true) and else (player_status =false)
+ # ~~~~ Why? because it makes your code look cleaner       
         # for more than 1 card in the deck, add and checktotal
         else:
             # only hit if player status is true
@@ -91,20 +99,31 @@ class BlackJack:
                 # get the top card from the deck and add it to specified player
                 self.allPlayers[player_index].addHand(self.deck.topCard())
                 # check total to see if player has gone bust or not. If bust, change player_status to false
-                self.checkTotal(player_index)
+                return self.checkTotal(player_index)
             else:
                 # player_status is false: do not give card, give error statement
-                print("Error: Player '{}' can NOT recieve anymore cards".format(self.allPlayers[player_index].name))
+                return ("Error: Player '{}' can NOT recieve anymore cards".format(self.allPlayers[player_index].name))
 
 # NEED TO ADD STATEMENT OF >=17. MAKE THIS A LOOP FOR MORE THAN 2 CARDS
     def hitDealer(self):
-        # if dealer has <2 cards (0,1,2), just give the dealer the single card
+        # if dealer has <2 cards (0 or 1 card), just give the dealer another card
         if len(self.dealer.hand) < 2:
             self.dealer.addHand(self.deck.topCard())
         else:
             # if dealer has 2 cards, keep giving dealer cards until total >= 17
             while self.dealer.total < 17:
                 self.dealer.addHand(self.deck.topCard())
+                # if dealer holds ace and total currently >21
+                if self.dealer.ace == True:
+                    self.dealerTotal()
+#~~~~ this is the end of the dealer getting cards (when they reach >17, so you probably want to show dealer's hand here, or call a function that does that
+    
+    def dealerTotal(self):
+        self.dealer.ace = False
+        if self.dealer.total > 21:
+            self.dealer.total -= 10
+            
+         
 
 # --------------------------------------------------------
 # -------------- HAND COUNT FOR WIN/BUST ---------------
@@ -117,7 +136,6 @@ class BlackJack:
     def checkTotal(self, player_index):
         ace = self.allPlayers[player_index].ace
         # if player has over 21
-        #print("Player '{}' has a total of {}".format(self.allPlayers[player_index].name, self.allPlayers[player_index].total))
         if self.allPlayers[player_index].total > 21:
             # check if player holds an ace (double value of 11 and 1)
             if ace == True:
@@ -126,27 +144,40 @@ class BlackJack:
                 # check again if over 21 with new total
                 if self.allPlayers[player_index].total > 21:
                     # over 21 so bust
-                    self.allPlayers[player_index].player_status = False
-                    print(self.bust(player_index, self.allPlayers[player_index].total))
+                    #self.allPlayers[player_index].player_status = False
+                    return (self.bust(player_index, self.allPlayers[player_index].total))
 
                 elif self.allPlayers[player_index].total == 21:
                     # got to 21
-                    print(self.winner(player_index))
+                    return (self.winner(player_index))
             else:
                 # if over 21 but no ace, then change player status to false
-                self.allPlayers[player_index].player_status = False
-                print(self.bust(player_index, self.allPlayers[player_index].total))
+                #self.allPlayers[player_index].player_status = False
+                return (self.bust(player_index, self.allPlayers[player_index].total))
         
         # 21 is a winner
         elif self.allPlayers[player_index].total == 21:
-            print(self.winner(player_index))
-# ALSO NEED TO CHANGE PLAYER STATUS HERE TO FALSE CUZ THEY WON AND NOW ARE NOT PLAYING. OR DO THAT IN WIN
-# GIVE 3 POINTS FOR GETTING 21
-            
+            return (self.winner(player_index))
+
+        # less than 21, do nothing
+        else:
+            pass
+
+#~~~~ group together the first bit of winner() amd bust() cuz they are the same. call the helper function win_bust_prep()
+    # def win_bust_prep(self, player_index):
+    #     # print hand
+    #     print(self.allPlayers[player_index].showHand())
+    #     # store total
+    #     total =  self.allPlayers[player_index].total
+    #     # change status to false and delete hand
+    #     self.allPlayers[player_index].player_status = False
+    #     self.allPlayers[player_index].deleteHand()
+    #     # return total
+    #     return total
+
     # win(player) - When player gets 21: give message for winning player, remove their cards, and add 3 points to Player.points
-# CHANGE TO winnerMsg i.e. JUST GIVE MESSAGE TO PLAYER
-# OR CHANGE TO WINNER21() THIS WAY YOU CAN KEEP THE POINTS +=3 AND GIVE SPECIAL MESSAGE OF WINNING 21
     def winner(self, player_index):
+        print(self.allPlayers[player_index].showHand())
         # store player hand total
         total =  self.allPlayers[player_index].total
         # take their cards away and change player status to false
@@ -156,13 +187,18 @@ class BlackJack:
         if total == 21:
             # give 3 points
             self.allPlayers[player_index].points += 3
-            return ("Player '{}' has {}, you're a winner!".format(self.allPlayers[player_index].name, 21))
-        elif total < 21:
+            return ("Player '{}' has {}, you're a winner!\n".format(self.allPlayers[player_index].name, 21))
+
+#~~~~~ should it be dealer<=21? If dealer gets 21 doesnt that mean player's without 21 loose?
+#~~~ SHouls you check dealer<21 (first and then check rest) and total > dealer
+        elif total > self.dealer.total and self.dealer.total <= 21:
             # give 1 point
             self.allPlayers[player_index].points += 1
-            return ("Player's {}, to Dealer's {}\nPlayer '{}' has won against the Dealer!".format(total, self.dealer.total, self.allPlayers[player_index].name))
+            return ("Player's {}, to Dealer's {}\nPlayer '{}' has won against the Dealer!\n".format(total, self.dealer.total, self.allPlayers[player_index].name))
+
+#~~~ leave this else statement as a catch for now but honestly if code is working this should never show up
         else:
-            return "Error: This player is not a winner"
+            return "Error: This player is not a winner\n"
 
     # bust(player) - When player goes bust: remove their hand and give bust message. No points given
     def bust(self, player_index, num):
@@ -172,23 +208,48 @@ class BlackJack:
         self.allPlayers[player_index].player_status = False
         # remove player's hand then return statment
         self.allPlayers[player_index].deleteHand()
-        return ("Player '{}' has {}, it's a bust!".format(self.allPlayers[player_index].name, num))
+
+#~~~~ might want to store player total before deleting (so your code is similar to winner)
+        return ("Player '{}' has {}, it's a bust!\n".format(self.allPlayers[player_index].name, num))
 
    # call() - check all Player.total to determine winner against the dealer
     def compare2dealer(self):
+#~~~~ In the beginning dont worry about checking if all_player_status. Assume all the players have their status set at false before this function is called
+# ~~~ you can deal with checking later or even before this function is called         
         # check that all player status is false
         # check each player's status. 
         i = 0
         for player in self.allPlayers:
-            # if player has cards (hand length isnt 0) check who has higher total value
-            if len(player.hand) > 0:
-                # player > dealer -> winner, gets 1 point
-                if player.total > self.dealer.total:
-                    self.winnerReg(i)
-                # player <= dealer -> lose, nothing 
-                else:
+            print(player.name)
 
+#~~~ much simpler way of doing all of this
+# if  player with hand.length = 0 -> continue and i++
+# if dealer is bust (>21) and player is less than 21 (p<21) -> player won against dealer
+# if dealer >=21: a) dealer < player -> player won against dealer. b) dealer > player -> dealer won against player
+
+#~~~~ you can merge if dealer <=21 and player.hand > 0 into one if statement and the check: a) player had more than dealer -> they win
+            if self.dealer.total <= 21:
+                # if player has cards (hand length isnt 0) check who has higher total value
+                if len(player.hand) > 0:
+                    # player > dealer -> winner, gets 1 point
+                    if player.total > self.dealer.total:
+
+#~~~ Correct spelling in winner statement here. Can get ride of the statement actually and just call self.winner(i) cuz it has correct statement
+                        print("Im in the winner: {}".format(player.name))
+                        return(self.winner(i))
+                    # player <= dealer -> lose, nothing 
+                    elif player.total <= self.dealer.total:
+                        return ("Dealer won against Player '{}'".format(player.name))
+                    else:
+                        return("Im not a winner or loser: {}".format(player.name))
+            else:
+                print("Dealer went bust: {}".format(self.dealer.total))
+                if player.total <= 21:
+                    return(self.winner(i))
+            # increment to next player index
             i += 1
+
+#~~~ game is over so you should probably be incrementing the game count orrrrrrrrrr it should be in newgame
 
         
 
@@ -324,67 +385,98 @@ class BlackJack:
 # print("\n")
 
 # now do the same but add 2 players
-game = BlackJack()
-game.addPlayer()
-game.addPlayer()
-print("\n")
-# give player 2 cards then print their hand
-game.hit(0)
-game.hit(1)
-game.hit(0)
-game.hit(1)
-print(game.allPlayers[0].showHand())
-print(game.allPlayers[0].total)
-print("\n")
-print(game.allPlayers[1].showHand())
-print(game.allPlayers[1].total)
-print("\n")
-# give player another card and print hand
-game.hit(0)
-game.hit(1)
-print(game.allPlayers[0].showHand())
-print(game.allPlayers[0].total)
-print("\n")
-print(game.allPlayers[1].showHand())
-print(game.allPlayers[1].total)
-print("\n")
-# give player another card and print hand
-print("Did anyone go bust:")
-game.hit(0)
-game.hit(1)
-print("\n")
-print(game.allPlayers[0].showHand())
-print(game.allPlayers[0].total)
-print("\n")
-print(game.allPlayers[1].showHand())
-print(game.allPlayers[1].total)
-print("\n")
+# game = BlackJack()
+# game.addPlayer()
+# game.addPlayer()
+# print("\n")
+# # give player 2 cards then print their hand
+# game.hit(0)
+# game.hit(1)
+# game.hit(0)
+# game.hit(1)
+# print(game.allPlayers[0].showHand())
+# print(game.allPlayers[0].total)
+# print("\n")
+# print(game.allPlayers[1].showHand())
+# print(game.allPlayers[1].total)
+# print("\n")
+# # give player another card and print hand
+# game.hit(0)
+# game.hit(1)
+# print(game.allPlayers[0].showHand())
+# print(game.allPlayers[0].total)
+# print("\n")
+# print(game.allPlayers[1].showHand())
+# print(game.allPlayers[1].total)
+# print("\n")
+# # give player another card and print hand
+# print("Did anyone go bust:")
+# game.hit(0)
+# game.hit(1)
+# print("\n")
+# print(game.allPlayers[0].showHand())
+# print(game.allPlayers[0].total)
+# print("\n")
+# print(game.allPlayers[1].showHand())
+# print(game.allPlayers[1].total)
+# print("\n")
 
-# Test a 3rd player with artifically manufactured 21
-game.addPlayer()
-ace = Card("Spades", "Ace", 11)
-royal = Card("Spades", "King", 10)
-game.allPlayers[2].addHand(ace)
-game.allPlayers[2].addHand(royal)
-print(game.allPlayers[2].showHand())
-print(game.allPlayers[2].total)
+# # Test a 3rd player with artifically manufactured 21
+# game.addPlayer()
+# ace = Card("Spades", "Ace", 11)
+# royal = Card("Spades", "King", 10)
+# game.allPlayers[2].addHand(ace)
+# game.allPlayers[2].addHand(royal)
+# print(game.allPlayers[2].showHand())
+# print(game.allPlayers[2].total)
 
-game.checkTotal(2)
+# game.checkTotal(2)
 
-# test with card values: 10, 10, 1
-game.addPlayer()
-ace = Ace("Spades", "Ace", 11, 1)
-ten = Card("Spades", "10", 10)
-royal = Card("Spades", "King", 10)
-game.allPlayers[2].addHand(ten)
-game.allPlayers[2].addHand(royal)
-game.allPlayers[2].addHand(ace)
-print(game.allPlayers[2].ace)
-print(game.allPlayers[2].showHand())
-print(game.allPlayers[2].total)
+# # test with card values: 10, 10, 1
+# game.addPlayer()
+# ace = Ace("Spades", "Ace", 11, 1)
+# ten = Card("Spades", "10", 10)
+# royal = Card("Spades", "King", 10)
+# game.allPlayers[2].addHand(ten)
+# game.allPlayers[2].addHand(royal)
+# game.allPlayers[2].addHand(ace)
+# print(game.allPlayers[2].ace)
+# print(game.allPlayers[2].showHand())
+# print(game.allPlayers[2].total)
 
-game.checkTotal(2)
+# game.checkTotal(2)
 
+# Test July 22/2021
+# test compare2dealer 
+# create a game with 3 player
+g = BlackJack()
+g.addPlayer()
+g.addPlayer()
+g.addPlayer()
+# give each player and dealer 2 cards
+print("\n")
+g.hitDealer()
+g.hit(0)
+g.hit(1)
+g.hit(2)
+g.hitDealer()
+g.hit(0)
+g.hit(1)
+g.hit(2)
+# give each player another cardA
+print("\nGive players another card:")
+print(g.hit(0))
+print(g.hit(1))
+print(g.hit(2))
+# print(g.allPlayers[0].showHand())
+# print(g.allPlayers[1].showHand())
+# print(g.allPlayers[2].showHand())
+# give dealer more cards
+#g.hitDealer()
+
+#print(g.dealer.showHand())
+# compare to dealer to see winners
+#print(g.compare2dealer())
 
 
 
