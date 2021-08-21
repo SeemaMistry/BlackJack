@@ -86,23 +86,15 @@ class BlackJack:
 # if player_status == true: +card to player hand. If hand <= 2, checktotal
 # else (player_status = false): return or print error error message
 
-        # if giving first card, just add to player hand
-        if len(self.allPlayers[player_index].hand) < 1 and self.allPlayers[player_index].player_status == True:
+        if self.allPlayers[player_index].player_status == True:
+            # give the player a card
             self.allPlayers[player_index].addHand(self.deck.topCard())
-
- #~~~~ should change else into an elif (player_status == true) and else (player_status =false)
- # ~~~~ Why? because it makes your code look cleaner       
-        # for more than 1 card in the deck, add and checktotal
-        else:
-            # only hit if player status is true
-            if self.allPlayers[player_index].player_status == True:
-                # get the top card from the deck and add it to specified player
-                self.allPlayers[player_index].addHand(self.deck.topCard())
-                # check total to see if player has gone bust or not. If bust, change player_status to false
+            if len(self.allPlayers[player_index].hand) > 1:
                 return self.checkTotal(player_index)
-            else:
-                # player_status is false: do not give card, give error statement
-                return ("Error: Player '{}' can NOT recieve anymore cards".format(self.allPlayers[player_index].name))
+        
+        else:
+            return ("Error: Player '{}' can NOT recieve anymore cards".format(self.allPlayers[player_index].name))
+
 
 # NEED TO ADD STATEMENT OF >=17. MAKE THIS A LOOP FOR MORE THAN 2 CARDS
     def hitDealer(self):
