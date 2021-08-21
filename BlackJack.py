@@ -145,7 +145,7 @@ class BlackJack:
                 if self.allPlayers[player_index].total > 21:
                     # over 21 so bust
                     #self.allPlayers[player_index].player_status = False
-                    return (self.bust(player_index, self.allPlayers[player_index].total))
+                    return (self.bust(player_index))
 
                 elif self.allPlayers[player_index].total == 21:
                     # got to 21
@@ -153,7 +153,7 @@ class BlackJack:
             else:
                 # if over 21 but no ace, then change player status to false
                 #self.allPlayers[player_index].player_status = False
-                return (self.bust(player_index, self.allPlayers[player_index].total))
+                return (self.bust(player_index))
         
         # 21 is a winner
         elif self.allPlayers[player_index].total == 21:
@@ -164,25 +164,20 @@ class BlackJack:
             pass
 
 #~~~~ group together the first bit of winner() amd bust() cuz they are the same. call the helper function win_bust_prep()
-    # def win_bust_prep(self, player_index):
-    #     # print hand
-    #     print(self.allPlayers[player_index].showHand())
-    #     # store total
-    #     total =  self.allPlayers[player_index].total
-    #     # change status to false and delete hand
-    #     self.allPlayers[player_index].player_status = False
-    #     self.allPlayers[player_index].deleteHand()
-    #     # return total
-    #     return total
+    def win_bust_prep(self, player_index):
+        # print hand
+        print(self.allPlayers[player_index].showHand())
+        # store total
+        total =  self.allPlayers[player_index].total
+        # change status to false and delete hand
+        self.allPlayers[player_index].player_status = False
+        self.allPlayers[player_index].deleteHand()
+        # return total
+        return total
 
     # win(player) - When player gets 21: give message for winning player, remove their cards, and add 3 points to Player.points
     def winner(self, player_index):
-        print(self.allPlayers[player_index].showHand())
-        # store player hand total
-        total =  self.allPlayers[player_index].total
-        # take their cards away and change player status to false
-        self.allPlayers[player_index].player_status = False
-        self.allPlayers[player_index].deleteHand()
+        total = self.win_bust_prep(player_index)
         # check which winning message to give (based on total == 21 or <21). Give point appropriately 
         if total == 21:
             # give 3 points
@@ -201,16 +196,10 @@ class BlackJack:
             return "Error: This player is not a winner\n"
 
     # bust(player) - When player goes bust: remove their hand and give bust message. No points given
-    def bust(self, player_index, num):
-# I just want to see the player's hand
-        print(self.allPlayers[player_index].showHand())
-        # change player status!!!! Otherwise youll delete their hand and keep giving them cards!!
-        self.allPlayers[player_index].player_status = False
-        # remove player's hand then return statment
-        self.allPlayers[player_index].deleteHand()
-
+    def bust(self, player_index):
+        total = self.win_bust_prep(player_index)
 #~~~~ might want to store player total before deleting (so your code is similar to winner)
-        return ("Player '{}' has {}, it's a bust!\n".format(self.allPlayers[player_index].name, num))
+        return ("Player '{}' has {}, it's a bust!\n".format(self.allPlayers[player_index].name, total))
 
    # call() - check all Player.total to determine winner against the dealer
     def compare2dealer(self):
