@@ -66,8 +66,8 @@ class BlackJack:
         i = 0
         for player in self.allPlayers:
             if player.name == delete_name:
+                self.allPlayers.pop(i).name                
                 print("\nPlayer '{}' has been removed from the game\n".format(player.name))
-                self.allPlayers.pop(i).name
             i += 1
 
 # --------------------------------------------------------
@@ -244,9 +244,10 @@ class BlackJack:
     def clearHands(self):
         # clear dealer's hand
         self.dealer.deleteHand()
-        # clear all player's hand
+        # clear all player's hand and set player_status to true
         for people in self.allPlayers:
             people.deleteHand()
+            people.player_status = True
 
     # resetDeck() - new deck and shuffle it
     def resetDeck(self):
@@ -258,7 +259,7 @@ class BlackJack:
         # INCREMENT GAME COUNT
         self.gameCount += 1
         # loop through and add player's until user says no more players 
-        morePlayer = "y"
+        morePlayer = input("Would you like to add another player? [y/n]: ")
         while morePlayer == "y":
             self.addPlayer()
             morePlayer = input("Would you like to add another player? [y/n]: ")
@@ -521,12 +522,16 @@ g.newGame()
 request = input('What would you like to do now? Type "help" if you need help. Type "exit" if you want to exit: ')
 while request != "exit":
     if request == "help":
-        print("Here is a list of commands you can type:\nnew game\tStart another game with existing players\ndelete player\tDelete a player\nclear\tReset and clear all assests")
+        print("Here is a list of commands you can type:\nnew game\tStart another game with existing players\ndelete player\tDelete a player\ndelete\tDelete game and clear all assests to default")
     elif request == "new game":
         g.newGame()
     elif request == "delete player":
         name = input("Provide the player's name you wish to delete: ")
         g.deletePlayer(name)
+    elif request == "clear":
+        g.delete()
+    request = input('What would you like to do now? Type "help" if you need help. Type "exit" if you want to exit: ')
+
 
 
 

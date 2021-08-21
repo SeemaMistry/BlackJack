@@ -18,7 +18,7 @@ class Player:
         # clear all the cards from the deck
         self.hand.clear()
         self.total = 0
-        #print("{}, has no cards".format(self.name))
+       # print("{}, has no cards".format(self.name))
 
     # add card to player's hand and add num count 
     def addHand(self, card):
@@ -44,7 +44,7 @@ class Player:
             if i < (handLen-1):
                 hand += ", "
             i += 1
-        return hand
+        return (hand)
 
 
 class Dealer(Player):
