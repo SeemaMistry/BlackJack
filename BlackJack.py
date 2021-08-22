@@ -178,7 +178,7 @@ class BlackJack:
         if total == 21:
             # give 3 points
             self.allPlayers[player_index].points += 3
-            print ("Player '{}' has {}, you're a winner!\n".format(self.allPlayers[player_index].name, 21))
+            print ("BlackJack!\nPlayer {} has {}, you're a winner!\n".format(self.allPlayers[player_index].name, 21))
 
         else:
             self.allPlayers[player_index].points += 1
@@ -203,39 +203,32 @@ class BlackJack:
 
    # call() - check all Player.total to determine winner against the dealer
     def compare2dealer(self):
-#~~~~ In the beginning dont worry about checking if all_player_status. Assume all the players have their status set at false before this function is called
-# ~~~ you can deal with checking later or even before this function is called         
-        # check that all player status is false
-        # check each player's status. 
-        print("\nNow we will compare against the dealer:")
-        i = 0
+        print("\nAll players have been served by the dealer.\nNow we will compare all players hands against the dealer:")
+        print(self.dealer.showHand())
+        print("\n")
+        i = 0 # player index
         for player in self.allPlayers:
-            print(player.name)
-
-#~~~ much simpler way of doing all of this
-# if  player with hand.length = 0 -> continue and i++
-# if dealer is bust (>21) and player is less than 21 (p<21) -> player won against dealer
-# if dealer >=21: a) dealer < player -> player won against dealer. b) dealer > player -> dealer won against player
+            # if  player with hand.length = 0 -> continue to next player i++
             if len(player.hand) == 0:
                 i += 1
-                continue
             else:
+                print("Comparing Player {}'s hand to dealer's hand:\n".format(player.name))
+                # if dealer is bust (>21) and player is less than 21 (p<21) -> player won against dealer
                 if player.total <= 21 and self.dealer.total > 21:
-                    # player won against dealer
                     self.winner(i)
+                # if dealer >=21: a) dealer < player -> player won against dealer. b) dealer > player -> dealer won against player
                 elif self.dealer.total <= 21:
                     if self.dealer.total < player.total:
                         # player won against dealer
                         self.winner(i)
                     elif self.dealer.total >= player.total:
                         # dealer won against player
-                        print("Dealer won against Player '{}'".format(player.name))
+                        print(player.showHand())
+
+                        print("Dealer's {} won against Player {}'s hand of {}\n".format(self.dealer.total, player.name, player.total))
+                # increment player index
                 i += 1
-
-#~~~ game is over so you should probably be incrementing the game count orrrrrrrrrr it should be in newgame
-
-        
-
+   
 # --------------------------------------------------------
 # -------------- RESET FOR A NEW ROUND ---------------
 # --------------------------------------------------------
@@ -303,8 +296,8 @@ class BlackJack:
          
         # once all players are stay (but not at 21) let dealer hit (has to hit if below 17)
         self.hitDealer()
-        print(self.dealer.showHand())
-        print("\n")
+        #print(self.dealer.showHand())
+        #print("\n")
 
 
         # compare remaining players (>21) to dealer. 
@@ -313,7 +306,7 @@ class BlackJack:
             # anyone <dealer losses -> take away their cards
         
         # show player points
-        print("List of player and their points:")
+        print("\nList of player and their points:")
         for player in self.allPlayers:
             print("{} - {}".format(player.name, player.points))
         
@@ -334,6 +327,24 @@ class BlackJack:
         # reset game count
         self.gameCount = 0
 
+
+
+# Test Aug 21st 2021
+# Testing newGame()
+g = BlackJack()
+g.newGame()
+request = input('What would you like to do now? Type "help" if you need help. Type "exit" if you want to exit: ')
+while request != "exit":
+    if request == "help":
+        print("Here is a list of commands you can type:\nnew game\tStart another game with existing players\ndelete player\tDelete a player\ndelete\tDelete game and clear all assests to default")
+    elif request == "new game":
+        g.newGame()
+    elif request == "delete player":
+        name = input("Provide the player's name you wish to delete: ")
+        g.deletePlayer(name)
+    elif request == "clear":
+        g.delete()
+    request = input('What would you like to do now? Type "help" if you need help. Type "exit" if you want to exit: ')
 
 
 
@@ -514,24 +525,6 @@ class BlackJack:
 # print(g.dealer.showHand())
 # # compare to dealer to see winners
 # print(g.compare2dealer())
-
-# Test Aug 21st 2021
-# Testing newGame()
-g = BlackJack()
-g.newGame()
-request = input('What would you like to do now? Type "help" if you need help. Type "exit" if you want to exit: ')
-while request != "exit":
-    if request == "help":
-        print("Here is a list of commands you can type:\nnew game\tStart another game with existing players\ndelete player\tDelete a player\ndelete\tDelete game and clear all assests to default")
-    elif request == "new game":
-        g.newGame()
-    elif request == "delete player":
-        name = input("Provide the player's name you wish to delete: ")
-        g.deletePlayer(name)
-    elif request == "clear":
-        g.delete()
-    request = input('What would you like to do now? Type "help" if you need help. Type "exit" if you want to exit: ')
-
 
 
 
