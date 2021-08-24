@@ -135,6 +135,7 @@ class BlackJack:
         if self.allPlayers[player_index].total > 21:
             # check if player holds an ace (double value of 11 and 1)
             if ace == True:
+                self.allPlayers[player_index].ace = False
                 # if there is an ace (and total > 21), has double value of 11 and 1. Add -10 to total
                 self.allPlayers[player_index].total += (-10)
                 # check again if over 21 with new total
