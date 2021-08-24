@@ -164,7 +164,7 @@ class BlackJack:
         # print hand
         print(self.allPlayers[player_index].showHand())
         # store total
-        total =  self.allPlayers[player_index].total
+        total = self.allPlayers[player_index].total
         # change status to false and delete hand
         self.allPlayers[player_index].player_status = False
         self.allPlayers[player_index].deleteHand()
@@ -240,6 +240,7 @@ class BlackJack:
         # clear all player's hand and set player_status to true
         for people in self.allPlayers:
             people.deleteHand()
+            people.ace = False
             people.player_status = True
 
     # resetDeck() - new deck and shuffle it
