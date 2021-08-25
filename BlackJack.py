@@ -8,14 +8,12 @@ from player import Player, Dealer, Deck, Card
 # Winners and Losers:
 #   - 2 cards add to 21 (winner) -> +3 points
 #   - 2+ cards add up to 21 (winner) -> +3 points
-#   - 2+ cards >21 but <Dealer's total (win) -> +1 point
+#   - 2+ cards <21 but >Dealer's total (win) -> +1 point
 #   - 2+cards <21 (bust) -> +0
 # 
 
 class BlackJack:
     def __init__(self):
-        # initialize game:
-        # deck
         # shuffle the deck
         self.deck = Deck()
         self.deck.shuffle()
@@ -23,9 +21,7 @@ class BlackJack:
         self.dealer = Dealer()
         # allPlayers
         self.allPlayers = []
-        # allPlayerStatus = true (as long as one player has player_status as true, not including dealer)
-        self.allPlayerStatus = True
-        # gameCount = 0
+        # number of games played
         self.gameCount = 0
 # --------------------------------------------------------
 # -------------- CREATE AND DELETE PLAYERS ---------------
@@ -325,7 +321,6 @@ class BlackJack:
         self.dealer = Dealer()
         # reset the player
         self.allPlayers = []
-        self.allPlayerStatus = True
         # reset game count
         self.gameCount = 0
 
