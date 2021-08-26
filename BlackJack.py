@@ -298,7 +298,7 @@ while request != "exit":
     elif request == "delete player":
         name = input("Provide the player's name you wish to delete: ")
         g.deletePlayer(name)
-    elif request == "clear":
+    elif request == "delete":
         g.delete()
     request = input('What would you like to do now? Type "help" if you need help. Type "exit" if you want to exit: ')
     
